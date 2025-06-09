@@ -2,12 +2,20 @@ name: Scheduled Job
 
 on:
   schedule:
-    - cron: '0 15 * * *'  # JST 24時（UTC 15時）に毎日実行
-  workflow_dispatch: # 手動でも実行できる
+    - cron: '0 15 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   run-script:
     runs-on: ubuntu-latest
+    steps:
+      - name: コードを取得
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: true
 
     steps:
       - name: コードを取得
