@@ -16,14 +16,14 @@ for company, url in rss_sources.items():
     print(f"🔍 {company} ニュース取得中: {url}")
     feed = feedparser.parse(url)
     print(f"✅ {company} 件数: {len(feed.entries)}")
-    
-    items = ""
-    for entry in feed.entries[:10]:
-        title = entry.title
-        link = entry.link
-        items += f"<li><a href='{link}' target='_blank'>{title}</a></li>\n"
 
-    if items:
+    if feed.entries:
+        items = ""
+        for entry in feed.entries[:10]:
+            title = entry.title
+            link = entry.link
+            items += f"<li><a href='{link}' target='_blank'>{title}</a></li>\n"
+
         news_sections += f"""
         <div class="section">
             <h2>📰 {company} の最新ニュース</h2>
@@ -36,9 +36,8 @@ for company, url in rss_sources.items():
             <h2>📰 {company} の最新ニュース</h2>
             <p>ニュースが取得できませんでした。</p>
         </div>
-    """
+        """
 
-# --- HTML全体テンプレート
 html_content = f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -61,18 +60,3 @@ html_content = f"""<!DOCTYPE html>
     <div class="section">
         <h2>💡 今日の格言</h2>
         <p>{quote}</p>
-    </div>
-
-    <div class="section">
-        <h2>📘 今日のショートストーリー</h2>
-        <p>{story}</p>
-    </div>
-</body>
-</html>
-"""
-
-# --- HTMLファイル出力
-with open("index.html", "w", encoding="utf-8") as f:
-    f.write(html_content)
-
-print("✅ index.html を生成しました。")
