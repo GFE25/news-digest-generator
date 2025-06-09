@@ -1,32 +1,41 @@
 import feedparser
 from datetime import datetime
 
-# --- 検索対象とRSS URLのマッピング
 rss_sources = {
-    "ソフトバンク": "https://news.google.com/rss/search?q=ソフトバンク",
-    "大正製薬": "https://news.google.com/rss/search?q=大正製薬",
-    "SBI証券": "https://news.google.com/rss/search?q=SBI証券"
+    "ソフトバンク": "https://news.google.com/rss/search?q=ソフトバンク&hl=ja&gl=JP&ceid=JP:ja",
+    "大正製薬": "https://news.google.com/rss/search?q=大正製薬&hl=ja&gl=JP&ceid=JP:ja",
+    "SBI証券": "https://news.google.com/rss/search?q=SBI証券&hl=ja&gl=JP&ceid=JP:ja"
 }
 
-# --- 今日の情報
 today = datetime.now().strftime('%Y年%m月%d日')
 quote = "「全盛期？これからだよ」 - 三浦知良"
 story = "電車で出会った彼女との何気ない5分間の会話が、ずっと心に残っている。"
 
-# --- 各社のニュースをHTML化
 news_sections = ""
 for company, url in rss_sources.items():
+    print(f"🔍 {company} ニュース取得中: {url}")
     feed = feedparser.parse(url)
+    print(f"✅ {company} 件数: {len(feed.entries)}")
+    
     items = ""
-    for entry in feed.entries[:10]:  # 各10件
+    for entry in feed.entries[:10]:
         title = entry.title
         link = entry.link
         items += f"<li><a href='{link}' target='_blank'>{title}</a></li>\n"
-    news_sections += f"""
-    <div class="section">
-        <h2>📰 {company} の最新ニュース</h2>
-        <ul>{items}</ul>
-    </div>
+
+    if items:
+        news_sections += f"""
+        <div class="section">
+            <h2>📰 {company} の最新ニュース</h2>
+            <ul>{items}</ul>
+        </div>
+        """
+    else:
+        news_sections += f"""
+        <div class="section">
+            <h2>📰 {company} の最新ニュース</h2>
+            <p>ニュースが取得できませんでした。</p>
+        </div>
     """
 
 # --- HTML全体テンプレート
