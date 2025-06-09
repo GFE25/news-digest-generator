@@ -1,15 +1,10 @@
 import feedparser
 from datetime import datetime
 
-# RSSフィードURL（好きなニュースサイトのRSSに変えてOK）
 RSS_URL = "https://news.yahoo.co.jp/rss/topics/top-picks.xml"
 
-# RSSをパース
 feed = feedparser.parse(RSS_URL)
-
-# 最新ニュースタイトル（存在しない場合はエラーメッセージ）
 latest_title = feed.entries[0].title if feed.entries else "ニュースが取得できませんでした。"
-
 today = datetime.now().strftime('%Y年%m月%d日')
 
 html_content = f"""<!DOCTYPE html>
@@ -29,7 +24,6 @@ html_content = f"""<!DOCTYPE html>
 </html>
 """
 
-# index.htmlを書き出す
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(html_content)
 
