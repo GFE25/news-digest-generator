@@ -1,1 +1,2 @@
+feedparser
 # No external Python libraries needed
