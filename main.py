@@ -16,7 +16,7 @@ for company, url in rss_sources.items():
     print(f"🔍 {company} ニュース取得中: {url}")
     feed = feedparser.parse(url)
     print(f"✅ {company} 件数: {len(feed.entries)}")
-    
+
     items = ""
     for entry in feed.entries[:10]:
         title = entry.title
@@ -25,18 +25,18 @@ for company, url in rss_sources.items():
 
     if items:
         news_sections += f"""
-        <div class="section">
-            <h2>📰 {company} の最新ニュース</h2>
-            <ul>{items}</ul>
-        </div>
-        """
+<div class="section">
+    <h2>📰 {company} の最新ニュース</h2>
+    <ul>{items}</ul>
+</div>
+"""
     else:
         news_sections += f"""
-        <div class="section">
-            <h2>📰 {company} の最新ニュース</h2>
-            <p>ニュースが取得できませんでした。</p>
-        </div>
-        """
+<div class="section">
+    <h2>📰 {company} の最新ニュース</h2>
+    <p>ニュースが取得できませんでした。</p>
+</div>
+"""
 
 # --- HTML全体テンプレート
 html_content = f"""<!DOCTYPE html>
