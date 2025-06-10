@@ -46,6 +46,12 @@ def get_news_for_company(company, url, max_retries=3):
                 return []
     
     return []
+    
+def filter_entries(company, entries):
+    """会社ごとにニュースをフィルタリング（例：ソフトバンクのホークス除外）"""
+    if company == "ソフトバンク":
+        return [entry for entry in entries if "ホークス" not in entry.title]
+    return entries
 
 def generate_news_section(company, entries):
     """ニュースセクションのHTMLを生成"""
@@ -131,6 +137,7 @@ story = random.choice(stories)
     for company, url in rss_sources.items():
         entries = get_news_for_company(company, url)
         news_sections += generate_news_section(company, entries)
+        entries = filter_entries(company, entries) 
         total_articles += len(entries)
         
         # レート制限対策：各リクエスト間に少し待機
