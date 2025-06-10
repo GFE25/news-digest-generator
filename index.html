@@ -5,172 +5,783 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>11BP 生成AI勉強会 NEWS DIGEST</title>
     <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --background-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body { 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hiragino Sans', sans-serif; 
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: var(--background-gradient);
             padding: 1em;
-            margin: 0;
             line-height: 1.6;
+            min-height: 100vh;
+            animation: fadeIn 0.8s ease-out;
         }
-        
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
         }
-        
-        h1 { 
-            color: #2c3e50; 
+
+        /* ヘッダー */
+        .header {
             text-align: center;
-            background: white;
-            padding: 1.5em;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin-bottom: 1.5em;
-        }
-        
-        .header-info {
-            text-align: center;
-            background: #34495e;
-            color: white;
-            padding: 1em;
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2em;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
             margin-bottom: 2em;
+            animation: slideInUp 0.6s ease-out;
         }
-        
-        .section { 
-            background: white; 
-            padding: 2em; 
-            margin-bottom: 1.5em; 
-            border-radius: 12px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border-left: 4px solid #3498db;
+
+        .header h1 {
+            color: var(--secondary-color);
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 0.5em;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        
-        .section h2 {
-            margin-top: 0;
-            color: #2c3e50;
-            border-bottom: 2px solid #ecf0f1;
-            padding-bottom: 0.5em;
-        }
-        
-        .news-list li { 
-            margin-bottom: 0.8em;
-            padding: 0.5em 0;
-            border-bottom: 1px solid #ecf0f1;
-        }
-        
-        .news-list li:last-child {
-            border-bottom: none;
-        }
-        
-        a { 
-            text-decoration: none; 
-            color: #2980b9;
+
+        .header-info {
+            background: var(--secondary-color);
+            color: white;
+            padding: 1em 2em;
+            border-radius: 50px;
+            margin-top: 1em;
+            display: inline-block;
             font-weight: 500;
         }
-        
-        a:hover {
-            color: #3498db;
-            text-decoration: underline;
+
+        /* タブナビゲーション */
+        .tab-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1em;
+            margin-bottom: 2em;
+            box-shadow: var(--card-shadow);
+            animation: slideInUp 0.7s ease-out;
         }
-        
-        .date {
-            color: #7f8c8d;
+
+        .tab-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5em;
+            margin-bottom: 1em;
+        }
+
+        .tab-button {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.8em 1.5em;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-color);
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .tab-button:hover::before,
+        .tab-button.active::before {
+            left: 0;
+        }
+
+        .tab-button:hover,
+        .tab-button.active {
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        /* ニュースセクション */
+        .tab-content {
+            display: none;
+            animation: slideInUp 0.5s ease-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .news-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2em;
+            margin-bottom: 1.5em;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            border-left: 5px solid var(--primary-color);
+            transition: var(--transition);
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        .news-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .news-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1em;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+        }
+
+        .company-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
             font-size: 0.9em;
         }
-        
-        .no-news {
-            color: #e74c3c;
-            font-style: italic;
+
+        .news-list {
+            list-style: none;
         }
-        
+
+        .news-item {
+            padding: 1em 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-item:hover {
+            padding-left: 1em;
+            background: rgba(52, 152, 219, 0.05);
+            border-radius: 10px;
+        }
+
+        .news-item::before {
+            content: '📰';
+            position: absolute;
+            left: -30px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .news-item:hover::before {
+            opacity: 1;
+            left: 0;
+        }
+
+        .news-item a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: 500;
+            transition: var(--transition);
+            display: block;
+        }
+
+        .news-item a:hover {
+            color: var(--primary-color);
+            padding-left: 0.5em;
+        }
+
+        .news-date {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-top: 0.3em;
+        }
+
+        /* 特別セクション */
+        .special-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5em;
+            margin-top: 2em;
+        }
+
+        .special-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2em;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            animation: slideInUp 0.9s ease-out;
+        }
+
+        .special-section:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .special-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1em;
+            font-size: 1.3em;
+        }
+
+        .quote-section {
+            border-left: 5px solid var(--success-color);
+        }
+
+        .story-section {
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .quote-text {
+            font-size: 1.1em;
+            font-style: italic;
+            color: var(--secondary-color);
+            position: relative;
+            padding: 1em;
+            background: rgba(39, 174, 96, 0.1);
+            border-radius: 10px;
+        }
+
+        .story-text {
+            color: #34495e;
+            line-height: 1.8;
+            position: relative;
+            padding: 1em;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 10px;
+        }
+
+        /* フッター */
         .footer {
             text-align: center;
-            color: #7f8c8d;
-            margin-top: 2em;
-            padding: 1em;
-            background: white;
-            border-radius: 8px;
-            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 3em;
+            padding: 2em;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            animation: slideInUp 1s ease-out;
         }
-        
+
+        /* レスポンシブ */
         @media (max-width: 768px) {
             body { padding: 0.5em; }
-            .section { padding: 1.5em; }
-            h1 { font-size: 1.5em; }
+            .header h1 { font-size: 2em; }
+            .tab-nav { flex-direction: column; }
+            .news-section, .special-section { padding: 1.5em; }
+            .special-sections { grid-template-columns: 1fr; }
+        }
+
+        /* スクロールアニメーション */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+        }
+
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>11BP 生成AI勉強会 NEWS DIGEST</h1>
-        
-        <div class="header-info">
-            <p><strong>📅 日付:</strong> 2025年06月10日 | <strong>🕐 更新時刻:</strong> 04:17</p>
-            <p><strong>📊 総記事数:</strong> 29件</p>
+        <!-- ヘッダー -->
+        <div class="header">
+            <h1>11BP 生成AI勉強会 NEWS DIGEST</h1>
+            <div class="header-info">
+                📅 2025年06月10日 | 🕐 09:17 | 📊 30件
+            </div>
+        </div>
+
+        <!-- タブナビゲーション -->
+        <div class="tab-container">
+            <div class="tab-nav">
+                <button class="tab-button active" data-tab="all">🌟 すべて</button>
+                <button class="tab-button" data-tab="softbank">📱 ソフトバンク</button>
+                <button class="tab-button" data-tab="taisho">💊 大正製薬</button>
+                <button class="tab-button" data-tab="sbi">💰 SBI証券</button>
+            </div>
+
+            <!-- すべてのニュース -->
+            <div class="tab-content active" id="all">
+                
+    <div class="news-section scroll-fade">
+        <h2><div class="company-icon">SB</div>ソフトバンク 最新ニュース</h2>
+        <ul class="news-list">
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMif0FVX3lxTFBGeFI3YzNCXzYyMzJoaHEtMC1GTXlOY1B0enhlYnlFczJPMmhhclVrS3ppY2RPY3VUOE9RMHFJMEJLUGFCSkhLTmptNWxwZDNjcWJTemFScVZsYlZ2cU5PRWxVWktUdnVlZFNldWZoYVlmTVdUN1kyYlc4MmUwaHc?oc=5' target='_blank'>【ソフトバンク】「秋広対策は大丈夫ですか？」本人の直撃に巨人・甲斐が爆笑〝塩回答〟（東スポWEB） - Yahoo!ニュース</a>
+                <div class='news-date'>06/10 08:16</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMif0FVX3lxTFBDd2poUGVnLThEY1VaVDVGTFJYa1NiUXJHUjNJM0xqNUJpRVRZY1RoT0pobWY1Nm1OcjJURVNxZHFUVWdTaVZsbjJzaGZNM19uaUtfaTJpQlFOczlhTmF2eFJLNGd5Qk5PckJiVTRUSklXeWFkeEFUVExQN2dmOUE?oc=5' target='_blank'>巨人甲斐拓也がソフトバンクナインと交流 笑顔であいさつ（西スポWEB OTTO！） - Yahoo!ニュース</a>
+                <div class='news-date'>06/10 07:23</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMif0FVX3lxTE1XVWg4NHprRjBlMFBORC15Zm9yLXVYNFF3V3RQYTduRENEZUxtdnZsbTdjWWs4ZV9uczZ1bC1vaFFWdVRBN1FtRjhOeWVxYkVsNGFOa0ptcnhMSWVoVXBHcFc1bjZtNXZLYnJNREU5RkpNcGE4ZVNVMHM4aGV2bzA?oc=5' target='_blank'>【ソフトバンク】小久保監督がリチャードイジる「迷惑かけますと話していたけど、かかりません」（日刊スポーツ） - Yahoo!ニュース</a>
+                <div class='news-date'>06/10 08:35</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTFBnU3VONHhPM01QRFBkU25UYmdGQ093ZnB4OE16ZXdPVlBUNElXUkI3SGQyZ2k0bldUdWpqR2tZdjRoOFA4MG9CZlMzc2lRSHc?oc=5' target='_blank'>ソフトバンクも日本の銀行もダマされた…「インドネシアの希望の星」と呼ばれた養殖ベンチャー「巨額粉飾」の闇 @gendai_biz - 現代ビジネス</a>
+                <div class='news-date'>06/08 21:32</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMidkFVX3lxTE1iR0pyREdmNkhmMlpyZ2JTX20zMTJjbXNVOVhmeXhLQnpXTnFrbnlsVldlRjg3RzdPQ3pYeEpjTFlUaGFNb0FTTlRFci11a09UYXhodnBMQjNiR0tFQW4xdlNFd3BtbXliVE1JYWFMZ1dkU0FDNGc?oc=5' target='_blank'>グリーンシル創業者、ソフトバンクＧとの「沈黙の掟」あったと主張 - Bloomberg.co.jp</a>
+                <div class='news-date'>06/10 07:34</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiZEFVX3lxTE5FUmM2OGFGekFkMlJDWG5VajZCaGlqX1dlcV9vcFNxNmt4VFFpN0U0UjNnWk1FWDB2WlRNS3NnR1pHLWJFS2YzUDJMZm13dFE5YkhxaENvTmRMWXVoREVQcE5BSlg?oc=5' target='_blank'>Wi-Fi利用で山岳遭難者位置を数メートル精度で特定 ソフトバンク - Impress Watch</a>
+                <div class='news-date'>06/09 08:03</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMickFVX3lxTE9VdzJKeDFzeDRscU5mYS1PNnlXU1ZuSm0tbFN4TlhPY3Z4OVNvd0hiTHk0TnlDRHlteFdMbjRpbzlNLXlReHBZVFZZN3RwTVBEbktRekNCYUk2N2U4RDI4RDd5TFg0OHFRRnlYLXE3Qm9LQQ?oc=5' target='_blank'>雪山遭難者を10分で救助 ソフトバンク新技術 - テレ朝news</a>
+                <div class='news-date'>06/09 23:56</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMif0FVX3lxTFBMWlNIM0lwaURHak1nWjIwTjJ2a1psX21pTkVFM2tfbmc1RnJySFZ5MUFWbVNVeEJRa1JIeHNVTVpqV1pub1BkMmMyMG8wYVR6dV9kcVZqcnNCdFJBWnVOSWlwLWxRRGRBU3NOXzR0RXBNYU92ZGhmcGtXcmZDUjA?oc=5' target='_blank'>ソフトバンクと科学大、遭難者をWi-Fiで探すシステムを発表（ケータイ Watch） - Yahoo!ニュース</a>
+                <div class='news-date'>06/09 08:40</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMicEFVX3lxTE94dVdpT0ROcEJJZ2tSUy1UQ0xrQjVzeGR1OTRIOXBXV0pOd2hTYTk2aWdxQjlWalpVQXRXNmN3aXYzaUNldnJLR2E1NjJvNldrQndxNmR3MzRPM04xc3E4dDdZS0h0b2tkejRwVzVCNkHSAXhBVV95cUxQZjlXZzJWRVd5VGIxemoyeVE0UzRiX2xJY2xQcGtVX1k4c2RoSFYyMHluM01wcjF6UzZCd283QzQtWFJJcGVMRk1DajNnMHpYT3FfM3U0QUl0dTE0RHBhdmhRakZUNElkRThZd1lUZzF6OXBtdEUwckg?oc=5' target='_blank'>【ソフトバンク】先週のMVP＆今週の展望　柳町達が打ち出の小づち状態 - nikkansports.com</a>
+                <div class='news-date'>06/10 02:00</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMickFVX3lxTE0xM1gtcG12OWQ3a3RQbnRCT2xxU2tWVlV3T3NPQ3kzTXJNYWtaMHZIQVc2dTBTYTN2R1UwU1p4Z0Jtd3JtTDg0ZE8yM1BDMFJjZEN3c21HSkhtX0RMN1NvUU14V2owbEZjTWRHenA4NWt0Zw?oc=5' target='_blank'>ソフトバンク野村勇が７号２ランで一矢報いる…チームは敗れたものの「切り替えていきたい」前向く：地域ニュース - 読売新聞オンライン</a>
+                <div class='news-date'>06/09 23:58</div>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="news-section scroll-fade">
+        <h2><div class="company-icon">大正</div>大正製薬 最新ニュース</h2>
+        <ul class="news-list">
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiZEFVX3lxTFA0YWl6eEp1RnNWMl83ekJ4U2U4V1NpOXdrNVF3SHRnZHg5ZlF3T3RvVWo2RWhiZEg2WEo5VnpTVTg5c0xtaElGSjBPUEdRQkk1Rno1d1dmZTNZdkpXTlcwNkExMjU?oc=5' target='_blank'>海外戦略「正直、欲しいのは米国」「東南アジアで品ぞろえ増やす」…大正製薬HD・上原茂社長〈中〉 - 読売新聞オンライン</a>
+                <div class='news-date'>06/09 03:01</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE93aFkzWk1uOUw3SUQyVUM4VHZjNkdfZmtoM2xyMjl4NXhOTkx4YUVOcW1LVllhdnNZR0NXM0U5VV9oalVXaHdUUXVReWhkbU9lTXYxYlRGandZZVRpc1J3MHRrQ0Fwb1d4NEhnbg?oc=5' target='_blank'>大正製薬、日常的にストレスを受ける毛髪に対してボタンピエキスがその悪影響を軽減し強い黒髪を維持する可能性を示唆 - 日本経済新聞</a>
+                <div class='news-date'>06/05 05:57</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiR0FVX3lxTE50MTVfM1dkNnNUd1lYMGx3R19DOXVaQ096S0Y3MTdkUDI2ZUYzYTVZd1pVdkJ0dGdDbmZGRWNwWlk0TURha3FR?oc=5' target='_blank'>安全への取り組み - taisho.co.jp</a>
+                <div class='news-date'>05/13 00:40</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiSEFVX3lxTE40blUyMExLNmNKSENHdjVxbzh1UzlRUlFTM3BKZ05ZQlg4SzQtMXFFWVlGVTJVaW5GLXR1SFpUTU9KdmIxWmZBb9IBTkFVX3lxTE44amR2NDhlNXJrc0RqY1p2TXR4U1hLaU5PaWtTNHZUaTd5NUNHZXloTGtnbkw1amFqa0FIbDRycHdUU1lkcC11clRoeENoQQ?oc=5' target='_blank'>〔人事〕大正製薬ホールディングス（6月20日付）ほか - 日刊薬業</a>
+                <div class='news-date'>06/05 05:15</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiREFVX3lxTE1XYTEzSUptZXZrZ25XMVN0TW1yc0R6d2I2NlNvYm9lTEpVbkZkNk1qNTJxUU9SSVVYTTZ6QVJBT25wajlk?oc=5' target='_blank'>大正製薬が展開中の「リポビタンDX×ストリートファイターII」コラボゲームに勝ち抜き戦タイプの「EXTRAモード」が登場 - @DIME アットダイム</a>
+                <div class='news-date'>06/09 08:04</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiR0FVX3lxTE4xZUx5X0NGNndFOXhiUzMzRF85b2JzU0MtTnFfVC1GYWp6OWM0bEZackpiTTMzdV9xaXNwV2Q2M3YyZGRqOW9R?oc=5' target='_blank'>夏風邪と冬風邪・・・症状の感じ方が違うのはなぜ？ - newscast.jp</a>
+                <div class='news-date'>06/10 01:00</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMigwFBVV95cUxNQmh6TC1yekFwZkZwZkEya2UyVm1hZms5NDhOQWRhR24xcmlFek16X2pDdVcyNUR0NmhLdGhRMnVVZDhHN2Z6VEowNzM1OG9GTExXckxiWVRzNEZwTTByWk14NFcwZ2xYWk5RblFWU2dGdWUzVWZORUdqVFFYY25MRDhVNA?oc=5' target='_blank'>大正製薬はテレビと YouTube の統合マーケティングで ROI 向上、マーケティングの責任者が道のりを語る - Think with Google</a>
+                <div class='news-date'>04/22 07:45</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiTkFVX3lxTE1NVER2S3NHc2JqZEh0VUxsUENBUWFLT0NOMnctVkRFYTYtWDRwWHVfbWN4T2lpSU52NE1RQkNzVnhweGdZZ0M0Z2l4N3FBdw?oc=5' target='_blank'>リポビタンDチャレンジカップ2025応援キャンペーン開催！ - アットプレス</a>
+                <div class='news-date'>06/04 02:00</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiU0FVX3lxTE0yUk1HMENuc1FoRi14djFiRGJOajhlQXhjUEdaVFhvSE5KR0dpd25haWcyZ0VJRm5QQlJ2SU1tcy15Ymw0eVlBRHh0c3NNRUZ2QjZN?oc=5' target='_blank'>大正製薬 熱中症対策訴え 江の島でごみ拾い - 東京新聞デジタル</a>
+                <div class='news-date'>05/31 22:19</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTE9yaFJkcTB6Q2JrRVIxVVJ4blRzMW5PNUZtVV9SRFd4cVgyUlVzUFZsbzl2UVJIeXdvZHI4aEhkVVRTTjE4ejJwZjB4VFRRZ1U?oc=5' target='_blank'>長谷工不動産、大正製薬北日本支店跡地に分譲マンション - リアルエコノミー</a>
+                <div class='news-date'>05/19 07:00</div>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="news-section scroll-fade">
+        <h2><div class="company-icon">SBI</div>SBI証券 最新ニュース</h2>
+        <ul class="news-list">
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMilgNBVV95cUxPRTFTU1pjdFBiV0JVVGNhYnNvMXBRQy10T0xWM0FvcktGYm9KaF9VTEtkTEZ0TXB0R0JadnhKX2cxc09HSEZiLTRaT20xWGRxcS13SUZsR2F5TnVDNFFmcTVGcksxRTV2d0pjcmgzOUNIMkd1VlhqZHQwT05WcTE2ejdGRENhX3JoRURhLVVwTkFUUGRaV0pkemVXa19NLVp0RC15U1BuNVhuU2dTY1k3cHptR3N6WEN5V1dkUUZJS2FmRGlWQXFoalRyY0YtLXdsWHlFOW9EWGlRLVBTc2RoQ3FhbGVQWWJyQTFGdlFLeDFpSXJ3WGVweHZOMHA3cGJBT2VUS0FneTB4Y1FNZ1JuNjkwNldyMXQ1TVlOZGUxcGplMHR2Y09vc3JkaVVlZDZFM0EwS09TNzh2UW9UOHJSWld5NmFxRDRlQW5WUGxCcjNoZGI5LWE5YkpjM0Q5Nzl0Ykk1VDRteE54QnFOMjZfMUFnemhrU0FMSHVnSkFnTF8xNnZ0Nk4wcXIyNmJyWkZENWhfSlF3?oc=5' target='_blank'>マーケット - sbisec.co.jp</a>
+                <div class='news-date'>06/09 09:04</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiYkFVX3lxTFBnWEpNVklGTXFPcDA0XzA4ZFpDYUJIT3p4SDYxVmdLcndZN1J6TVpia1U5SFY1NkpyZU5MbDdyRF9mMF8yX21nYXZSbE13MmhYQkpLNHdsYklUU3VHWHAxLVFn?oc=5' target='_blank'>世界の“次なる成長市場”に、信託報酬0.099%でアクセス『SBIネクスト・フロンティア高配当株式ファンド（年4回決算型）』の設定・運用開始(SBIグローバルアセットマネジメント)｜ニュースリリース - sbigroup.co.jp</a>
+                <div class='news-date'>06/06 03:42</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiRkFVX3lxTE03bG5OMmxNRmZ6TGhBVmhkWmpYSVZycndZNUZjcGpLS0U3b3VEb0NyZWdYRVJpV2t6ZDNDVGVoVEVsSE1MMEE?oc=5' target='_blank'>口座管理 - sbisec.co.jp</a>
+                <div class='news-date'>05/17 09:35</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMirwNBVV95cUxQUE1qdkZLZmplQmpNSUNDOTJLV1F0VjRuQmE1MlNjWWlKelVqYW9yMHNvTVZuR2Y1RHpOak94bkRRUDVYNmRjZnJDZ3FnQXp6VnROT2NPMjNjd3JwbkpFM2s4dFFIS1VSNVRZNXhId2g4U0x5ZXpfdkdDMHF3U2pzajFWY0p3dUsweFJlanlQWDRjSkxJQXdkeEVhV09nc2FhNXg1VlNEVHRZT05UeW5jVGJqbS1sbkhZcU5uZWlTbTlid0V2ZGd2SDNQZGYycVBwOVlCcUM2cmprS2pqQUdPeFFWYmhBQ2kxTGNqbTgtaFhWNnpiZlNuQS1lQ2g1cUJ0emN6UWEtRTBRbVJUM1Y3Q2gzN3dTSmd4Yk5rdDZhTDJ5QXFJM1V6U1NLSnBmdEN6UWF4TUhzQjFRSHduTnlFTTBMT1RoS3dyT2FBaHNKSXN0eXBucWNUZWl5NTVtRDVWMW5lZWxsSXkxWEZTY2x3RVZfRlZRMlpXb3M3YTdFV2FrYVVVYWx6UVVXdS1KZmdpXzdINlU0blIwYkdLVjdHVkZYU3Z0eWpmWHJyWWs0TQ?oc=5' target='_blank'>マーケット - sbisec.co.jp</a>
+                <div class='news-date'>06/04 18:45</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiZkFVX3lxTFBmbkhnRTZST21LbUwyNWhRSjFmTkd6TTRzVVUxc0hJbzFrY3RPQmZfcDlMVjlxV0lpejBtMEQ0Y2IwSkgxSE1zY09tQWx0aEVCTnRsaUx4R3V1amU5SWR5a1hJVnhVUQ?oc=5' target='_blank'>JCBオリジナルシリーズでのクレジットカード投信積立サービス開始のお知らせ(SBI証券)－ PR情報 - sbigroup.co.jp</a>
+                <div class='news-date'>05/22 07:00</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMif0FVX3lxTE9QRzN4QTBwU3E3OHNBUnB2bHlYSUloVGxXdDA4b09nNHBSdU1EZlZlVEJqRVNNcjFWU3ctV3YzWTRmVzJ3NVVwNWM4bkp1NEpDYWxPZ3NnMXRid2o4cC13eEVxOWN4QlpkVUx5NUNIUGdvRU5EWkhsLTRaTlY0V28?oc=5' target='_blank'>ドコモ、住信SBIネット銀行買収--マネックス証券はどうなる？ SBI証券との「2枚看板」懸念に回答 - Yahoo!ニュース</a>
+                <div class='news-date'>05/29 07:00</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMib0FVX3lxTE1HTkc1RTdBc0Q0WlhIY1p0Q0VwM3ZOUHY3ZXZac2J2WE1tanh2b0U4T1VJS0hrYlBadm5DN21yVll0NGlYS203Um1uT0Z1Mi1JMlN3blBGUF9pcUZlSXUyOVc2S09RWk9OTjc5MHJWaw?oc=5' target='_blank'>三井住友FG SBIと共同で新会社設立へ 資産運用サービス強化 | NHK - nhk.or.jp</a>
+                <div class='news-date'>06/03 12:09</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMihgNBVV95cUxNNmc2STJ3M3BSVm4zenVjRDhabFBNdlNwdHFOZWhZYm1FNFFQajFLbmN2djI4MU1YWDhXTmpWcGpjOGY1YWU5SWNhM0N0Z3FtaU9Hb1I3VXFDU01FcnFVNDVCM2JQYTNJWU1zSWxfczlrZWV0R2JRa0U4R1NQVlcwSGh2UVpSS056UjZnWjMtUnJpNEJQM3BOLXk3QUJ4cHBJYkFHNW9qcXRpZlpINC04Um5yVUVvNkktQmozMXZXallYR3IwMlEzSHhwOXZNbE5uZUlHUTZ1clF0a2M1MWtVTjFKZThnWmlpRVJxZGF0VE45QkRTMFRacks3dXZMaTdNX3VOdGl2djdTcWxmVURoRHZEVDdIRmFaNmM4V29BLTQ4U1NXeWxReGZGUU1CbjBoM215VEIxNk4tY2ttWFRhbFR4ekNrcDF3andndVFzdHYtRzZ5X29CVWdrSklnUGhnUlFPM0x2ZUpCeGo1eTVXSTFCaUI2MnkwRVhjc3pvX1J5WWR2NFE?oc=5' target='_blank'>ブロードコム（AVGO）AI需要が牽引、売上過去最高~粗利益率も業界トップ水準に！ - sbisec.co.jp</a>
+                <div class='news-date'>06/06 07:33</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiYkFVX3lxTE9rZjFESVJzOTNVRnpFOWtXVHVhb0s0RkpWOTJYazItbW1lOE1WajluNk1mYXg2VWtnT3BCbkowOW5VVWZnOTc0T3ZBdEh4eUhNdnhpRDdpRjZzV21Zd2xvRkh3?oc=5' target='_blank'>国内初となる証券総合口座1,400万口座達成のお知らせ - sbigroup.co.jp</a>
+                <div class='news-date'>03/11 07:00</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMif0FVX3lxTFBiWnVZRHJJU1BvUjhxUHVRWEJXVjh6SmVnelk0Rm9lSThCbm9fT1NxMGI2b1luVHhVS0M2TDBmb1I0VVVqVEtWRVVwd3JIUlNJa2tqQXJ1cDRoZF95MGZXbFJWY0ZwQ19BcWJGZDBUbHROa214NzlGTG5NaVEzNms?oc=5' target='_blank'>野口 航太郎 | 社員紹介（新卒入社） | 採用情報 - sbisec.co.jp</a>
+                <div class='news-date'>05/28 09:34</div>
+            </li>
+            
+        </ul>
+    </div>
+    
+            </div>
+
+            <!-- 個別企業タブ -->
+            
+        <div class="tab-content" id="softbank">
+            
+    <div class="news-section scroll-fade">
+        <h2><div class="company-icon">SB</div>ソフトバンク 最新ニュース</h2>
+        <ul class="news-list">
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMif0FVX3lxTFBGeFI3YzNCXzYyMzJoaHEtMC1GTXlOY1B0enhlYnlFczJPMmhhclVrS3ppY2RPY3VUOE9RMHFJMEJLUGFCSkhLTmptNWxwZDNjcWJTemFScVZsYlZ2cU5PRWxVWktUdnVlZFNldWZoYVlmTVdUN1kyYlc4MmUwaHc?oc=5' target='_blank'>【ソフトバンク】「秋広対策は大丈夫ですか？」本人の直撃に巨人・甲斐が爆笑〝塩回答〟（東スポWEB） - Yahoo!ニュース</a>
+                <div class='news-date'>06/10 08:16</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMif0FVX3lxTFBDd2poUGVnLThEY1VaVDVGTFJYa1NiUXJHUjNJM0xqNUJpRVRZY1RoT0pobWY1Nm1OcjJURVNxZHFUVWdTaVZsbjJzaGZNM19uaUtfaTJpQlFOczlhTmF2eFJLNGd5Qk5PckJiVTRUSklXeWFkeEFUVExQN2dmOUE?oc=5' target='_blank'>巨人甲斐拓也がソフトバンクナインと交流 笑顔であいさつ（西スポWEB OTTO！） - Yahoo!ニュース</a>
+                <div class='news-date'>06/10 07:23</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMif0FVX3lxTE1XVWg4NHprRjBlMFBORC15Zm9yLXVYNFF3V3RQYTduRENEZUxtdnZsbTdjWWs4ZV9uczZ1bC1vaFFWdVRBN1FtRjhOeWVxYkVsNGFOa0ptcnhMSWVoVXBHcFc1bjZtNXZLYnJNREU5RkpNcGE4ZVNVMHM4aGV2bzA?oc=5' target='_blank'>【ソフトバンク】小久保監督がリチャードイジる「迷惑かけますと話していたけど、かかりません」（日刊スポーツ） - Yahoo!ニュース</a>
+                <div class='news-date'>06/10 08:35</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTFBnU3VONHhPM01QRFBkU25UYmdGQ093ZnB4OE16ZXdPVlBUNElXUkI3SGQyZ2k0bldUdWpqR2tZdjRoOFA4MG9CZlMzc2lRSHc?oc=5' target='_blank'>ソフトバンクも日本の銀行もダマされた…「インドネシアの希望の星」と呼ばれた養殖ベンチャー「巨額粉飾」の闇 @gendai_biz - 現代ビジネス</a>
+                <div class='news-date'>06/08 21:32</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMidkFVX3lxTE1iR0pyREdmNkhmMlpyZ2JTX20zMTJjbXNVOVhmeXhLQnpXTnFrbnlsVldlRjg3RzdPQ3pYeEpjTFlUaGFNb0FTTlRFci11a09UYXhodnBMQjNiR0tFQW4xdlNFd3BtbXliVE1JYWFMZ1dkU0FDNGc?oc=5' target='_blank'>グリーンシル創業者、ソフトバンクＧとの「沈黙の掟」あったと主張 - Bloomberg.co.jp</a>
+                <div class='news-date'>06/10 07:34</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiZEFVX3lxTE5FUmM2OGFGekFkMlJDWG5VajZCaGlqX1dlcV9vcFNxNmt4VFFpN0U0UjNnWk1FWDB2WlRNS3NnR1pHLWJFS2YzUDJMZm13dFE5YkhxaENvTmRMWXVoREVQcE5BSlg?oc=5' target='_blank'>Wi-Fi利用で山岳遭難者位置を数メートル精度で特定 ソフトバンク - Impress Watch</a>
+                <div class='news-date'>06/09 08:03</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMickFVX3lxTE9VdzJKeDFzeDRscU5mYS1PNnlXU1ZuSm0tbFN4TlhPY3Z4OVNvd0hiTHk0TnlDRHlteFdMbjRpbzlNLXlReHBZVFZZN3RwTVBEbktRekNCYUk2N2U4RDI4RDd5TFg0OHFRRnlYLXE3Qm9LQQ?oc=5' target='_blank'>雪山遭難者を10分で救助 ソフトバンク新技術 - テレ朝news</a>
+                <div class='news-date'>06/09 23:56</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMif0FVX3lxTFBMWlNIM0lwaURHak1nWjIwTjJ2a1psX21pTkVFM2tfbmc1RnJySFZ5MUFWbVNVeEJRa1JIeHNVTVpqV1pub1BkMmMyMG8wYVR6dV9kcVZqcnNCdFJBWnVOSWlwLWxRRGRBU3NOXzR0RXBNYU92ZGhmcGtXcmZDUjA?oc=5' target='_blank'>ソフトバンクと科学大、遭難者をWi-Fiで探すシステムを発表（ケータイ Watch） - Yahoo!ニュース</a>
+                <div class='news-date'>06/09 08:40</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMicEFVX3lxTE94dVdpT0ROcEJJZ2tSUy1UQ0xrQjVzeGR1OTRIOXBXV0pOd2hTYTk2aWdxQjlWalpVQXRXNmN3aXYzaUNldnJLR2E1NjJvNldrQndxNmR3MzRPM04xc3E4dDdZS0h0b2tkejRwVzVCNkHSAXhBVV95cUxQZjlXZzJWRVd5VGIxemoyeVE0UzRiX2xJY2xQcGtVX1k4c2RoSFYyMHluM01wcjF6UzZCd283QzQtWFJJcGVMRk1DajNnMHpYT3FfM3U0QUl0dTE0RHBhdmhRakZUNElkRThZd1lUZzF6OXBtdEUwckg?oc=5' target='_blank'>【ソフトバンク】先週のMVP＆今週の展望　柳町達が打ち出の小づち状態 - nikkansports.com</a>
+                <div class='news-date'>06/10 02:00</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMickFVX3lxTE0xM1gtcG12OWQ3a3RQbnRCT2xxU2tWVlV3T3NPQ3kzTXJNYWtaMHZIQVc2dTBTYTN2R1UwU1p4Z0Jtd3JtTDg0ZE8yM1BDMFJjZEN3c21HSkhtX0RMN1NvUU14V2owbEZjTWRHenA4NWt0Zw?oc=5' target='_blank'>ソフトバンク野村勇が７号２ランで一矢報いる…チームは敗れたものの「切り替えていきたい」前向く：地域ニュース - 読売新聞オンライン</a>
+                <div class='news-date'>06/09 23:58</div>
+            </li>
+            
+        </ul>
+    </div>
+    
         </div>
         
-        
-<div class="section">
-    <h2>📰 ソフトバンク の最新ニュース</h2>
-    <ul class="news-list"><li><a href='https://news.google.com/rss/articles/CBMif0FVX3lxTE9DVG1hVTBhaEc5MENocGtSWWRPZFdqUDU1ODRPeU0yVHFkcldzczNHRHF2V2dWSmlBUWJQM0VNOFpGQ1JJOXA1YnpsS3RMVU1fZ2ozQXRmVDhUaUNBNTdvY1NaZzNDanc0VmYxRS00LTFXd3BIZTh1R0pFSmIzdXc?oc=5' target='_blank'>ソフトバンクが波に乗れないが…他球団から「最も怖いチーム」警戒が（週刊ベースボールONLINE） - Yahoo!ニュース</a> <span class='date'>(06/10 02:01)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMihwFBVV95cUxNMnE3U1AyVXZzbHltSFNJaDhtTl80Z2NWZ0poNWhwUEFpOG5DcGxlWnNWWXlZSkNNQU1FN3JRa2NqRVdjbXI0WWZ3aDk2d0w2aS1sdTBuLTZDa09kV3pnRXhXUzFLNFNEejFLQVBqOGEwWVU3QlowU0dDc1U4Ml9NSGExY1lOd28?oc=5' target='_blank'>前場コメント No.7 エクサウィザー、ソフトバンクＧ、豊田合、ハイブリテク、ＮＳＤ、太平洋セメ(トレーダーズ・ウェブ) - Yahoo!ファイナンス</a> <span class='date'>(06/10 02:31)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTE00clRlN3JPVENrWGZFX0tGdC0zNzhXVHRLTmZhbFQyRGFIS29UVzRrdmFiU3dhWUxscDJmYkpGckpLV2FDWVNrZTN4UzEyQ0U?oc=5' target='_blank'>ソフトバンクも農林中金も「ESG」にダマされて大損失…世界を揺るがすインドネシア養殖ベンチャーの「巨額粉飾」その一部始終を追う @gendai_biz - 現代ビジネス</a> <span class='date'>(06/08 21:06)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMiZEFVX3lxTE5FUmM2OGFGekFkMlJDWG5VajZCaGlqX1dlcV9vcFNxNmt4VFFpN0U0UjNnWk1FWDB2WlRNS3NnR1pHLWJFS2YzUDJMZm13dFE5YkhxaENvTmRMWXVoREVQcE5BSlg?oc=5' target='_blank'>Wi-Fi利用で山岳遭難者位置を数メートル精度で特定 ソフトバンク - Impress Watch</a> <span class='date'>(06/09 08:03)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMiYEFVX3lxTE5PRDBhaFNtcGMtVFdhNUtlNXZEbjJXZDJJMW4wQmZaVFpOVlM3THh5R0hhU2tfY2sza05sTVRTYnJVU0Y5SlJpZG5Vci1UY3RMdFVoMlhkYUZybFNIQ05BeQ?oc=5' target='_blank'>【材料】 ソフトバンクＧが切り返す、ナスダック高と傘下のアーム株上昇受け買い戻し - かぶたん</a> <span class='date'>(06/09 00:11)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMizgFBVV95cUxNd1hCSVN1Q3ZKZmpveUROQzZZSVQwYUxHUnpKVHJCcTZvQ2FlenVuX1A2RXdKdC0wck1tMjdGcG45bUQ0Z182MDRmakJEcXpBcUtQNWFOSnZQLThKRW9zMWdwbEoxZzlCOTR5cWZ2N2UtWVE1OVVFZkYybmFhYzZST0JrT2R5c2JSX3VUUnlXR2JZOFdLYkwwRFA0bnM2SUkwdXZoWEx1ZXBxU2VRSE51a2xpTDdTSmJkbERUVjduYkloNFN6MkdDeUJJdkt5Zw?oc=5' target='_blank'>【6/10-12】ソフトバンク対巨人の地上波テレビ放送予定・ネット配信予定・視聴方法 - dazn.com</a> <span class='date'>(06/09 10:24)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMiVkFVX3lxTFA4S3RFTklXSWE3dFVTcTJ4TUFZVlQ0emlUWUd2WV9vM3VYbm5mQl9YMEZOQXk3NDNVdF8yUl9TNGVlQXpXN0JSaGt4aUhHY1Rkalp0OE9R0gFSQVVfeXFMTnQ0UzhkZURXLTczS3UzaFFpczg4S0M1Z1ZQUHppSW1UWlBjakg2T0lSdDJ2NHYzNlBiOTBNWGNOaU9ySzBlSktSbGk0VWRmcjhOQQ?oc=5' target='_blank'>福岡の街をブーストする！ 超豪華ゲスト目白押しの福岡ソフトバンク夏イベントまとめ - パ・リーグ.com</a> <span class='date'>(06/09 03:00)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9oeFVLM1VkcjRVaDRjQ2hHMXZMNm9LMlp1NzVBTHVkNndGd0txS1NxMW95Y2FPYUFQeXM3X19uNF90bE9xc2o0elU2Rnl2QXdQZmVDR3FUTnBoS01ua1pyeE53SHFyaU0?oc=5' target='_blank'>宮崎市で福岡ソフトバンクホークスによるスポーツ教室 - TBS NEWS DIG</a> <span class='date'>(06/08 09:00)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMicEFVX3lxTFBfeFdjSUVla1hzNkJuOExCTGhQbGE5eXBGQ0lDU2E0bnRjbDRmdDNTblQ4cVpGN1FINjFkZ0VibkVrdm91YlNvcFFBOE9lRnU0ZXVHYllDZWxBdUNWc0JpTS1reXJUUXNmaXVEcU9EWVfSAXhBVV95cUxPZWZYTnBXcElwenRKR01ydF9CQl9FZ3BfcUt1UWFRaDBoWElRTTZBTXBNZVJoZmlxVVRqd2FOZnN3dlMycGtjU0N6ZEVyWDNldmR0d1g1bV9qTjR0SDZ1NmZaQ09iZ1V5dHh6d2QtN1M0T2RhZkJLTXo?oc=5' target='_blank'>【ソフトバンク】東浜巨、10日の２軍オイシックス戦に先発　倉野Ｃが明言　１軍では１勝２敗 - nikkansports.com</a> <span class='date'>(06/09 03:37)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMickFVX3lxTE0xM1gtcG12OWQ3a3RQbnRCT2xxU2tWVlV3T3NPQ3kzTXJNYWtaMHZIQVc2dTBTYTN2R1UwU1p4Z0Jtd3JtTDg0ZE8yM1BDMFJjZEN3c21HSkhtX0RMN1NvUU14V2owbEZjTWRHenA4NWt0Zw?oc=5' target='_blank'>ソフトバンク野村勇が７号２ランで一矢報いる…チームは敗れたものの「切り替えていきたい」前向く：地域ニュース - 読売新聞オンライン</a> <span class='date'>(06/09 23:58)</span></li>
-</ul>
-</div>
-
-<div class="section">
-    <h2>📰 大正製薬 の最新ニュース</h2>
-    <ul class="news-list"><li><a href='https://news.google.com/rss/articles/CBMiZEFVX3lxTFBnMkdZVDVuekZqVlpLckctQjl6UUlRaDlteXo4eFhYRGRkS3ZjSHBLbzJ0b1lzaWpOM1ZCbXM3SGhVMWJncDFfajhYVkVyR25nUEE1cmMwdzNWYVpUYTMwMndCalM?oc=5' target='_blank'>スポーツ振興「『ここなら信用できる』という距離感作りたい」…大正製薬HD・上原茂社長〈下〉 - 読売新聞オンライン</a> <span class='date'>(06/09 03:02)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE93aFkzWk1uOUw3SUQyVUM4VHZjNkdfZmtoM2xyMjl4NXhOTkx4YUVOcW1LVllhdnNZR0NXM0U5VV9oalVXaHdUUXVReWhkbU9lTXYxYlRGandZZVRpc1J3MHRrQ0Fwb1d4NEhnbg?oc=5' target='_blank'>大正製薬、日常的にストレスを受ける毛髪に対してボタンピエキスがその悪影響を軽減し強い黒髪を維持する可能性を示唆 - 日本経済新聞</a> <span class='date'>(06/05 05:57)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMiR0FVX3lxTE50MTVfM1dkNnNUd1lYMGx3R19DOXVaQ096S0Y3MTdkUDI2ZUYzYTVZd1pVdkJ0dGdDbmZGRWNwWlk0TURha3FR?oc=5' target='_blank'>安全への取り組み - taisho.co.jp</a> <span class='date'>(05/13 00:40)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMiREFVX3lxTE1XYTEzSUptZXZrZ25XMVN0TW1yc0R6d2I2NlNvYm9lTEpVbkZkNk1qNTJxUU9SSVVYTTZ6QVJBT25wajlk?oc=5' target='_blank'>大正製薬が展開中の「リポビタンDX×ストリートファイターII」コラボゲームに勝ち抜き戦タイプの「EXTRAモード」が登場 - @DIME アットダイム</a> <span class='date'>(06/09 08:04)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMiR0FVX3lxTE4xZUx5X0NGNndFOXhiUzMzRF85b2JzU0MtTnFfVC1GYWp6OWM0bEZackpiTTMzdV9xaXNwV2Q2M3YyZGRqOW9R?oc=5' target='_blank'>夏風邪と冬風邪・・・症状の感じ方が違うのはなぜ？ - newscast.jp</a> <span class='date'>(06/10 01:00)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMiSEFVX3lxTE40blUyMExLNmNKSENHdjVxbzh1UzlRUlFTM3BKZ05ZQlg4SzQtMXFFWVlGVTJVaW5GLXR1SFpUTU9KdmIxWmZBb9IBTkFVX3lxTE44amR2NDhlNXJrc0RqY1p2TXR4U1hLaU5PaWtTNHZUaTd5NUNHZXloTGtnbkw1amFqa0FIbDRycHdUU1lkcC11clRoeENoQQ?oc=5' target='_blank'>〔人事〕大正製薬ホールディングス（6月20日付）ほか - 日刊薬業</a> <span class='date'>(06/05 05:15)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMiTkFVX3lxTE1NVER2S3NHc2JqZEh0VUxsUENBUWFLT0NOMnctVkRFYTYtWDRwWHVfbWN4T2lpSU52NE1RQkNzVnhweGdZZ0M0Z2l4N3FBdw?oc=5' target='_blank'>リポビタンDチャレンジカップ2025応援キャンペーン開催！ - アットプレス</a> <span class='date'>(06/04 02:00)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMigwFBVV95cUxNQmh6TC1yekFwZkZwZkEya2UyVm1hZms5NDhOQWRhR24xcmlFek16X2pDdVcyNUR0NmhLdGhRMnVVZDhHN2Z6VEowNzM1OG9GTExXckxiWVRzNEZwTTByWk14NFcwZ2xYWk5RblFWU2dGdWUzVWZORUdqVFFYY25MRDhVNA?oc=5' target='_blank'>大正製薬はテレビと YouTube の統合マーケティングで ROI 向上、マーケティングの責任者が道のりを語る - Think with Google</a> <span class='date'>(04/22 07:45)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMiU0FVX3lxTE0yUk1HMENuc1FoRi14djFiRGJOajhlQXhjUEdaVFhvSE5KR0dpd25haWcyZ0VJRm5QQlJ2SU1tcy15Ymw0eVlBRHh0c3NNRUZ2QjZN?oc=5' target='_blank'>大正製薬 熱中症対策訴え 江の島でごみ拾い - 東京新聞デジタル</a> <span class='date'>(05/31 22:19)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMiTEFVX3lxTE9NcE1JMFJNYWJuc3VlTDlvaEp0M3dWNmZLVUJJc2trcHppZmVoV2V2LXBiOVE4Q1Bjejh0R0Y2a2x5T3BGNXN2b3NhaFfSAU9BVV95cUxOR3FmYjQ5dEdwZG9Tcm1QYmx1NjBlVGtoZEV0Q3ZKQUtYMUl3bXNxTDdSLXlqd1BRSDJpT0JpeW1DcDJFbXlWaVZRMnJZMko0?oc=5' target='_blank'>大正製薬と興和がドロドロの内輪モメ！OTC団体との「1億円裁判」に透ける興和の執念とは？ - ダイヤモンド・オンライン</a> <span class='date'>(04/17 07:00)</span></li>
-</ul>
-</div>
-
-<div class="section">
-    <h2>📰 SBI証券 の最新ニュース</h2>
-    <ul class="news-list"><li><a href='https://news.google.com/rss/articles/CBMi-wJBVV95cUxPS3lFWThWaHpCNlF4Wi1TVE1idVItUGlmcC01eWZzMGhrbzIzbTNFOWEyWl82QTIxaGJKWjBKNUxwU1NrSmZKZE1SX2QtaUVXbmUtSTY4WmJqY0R3RXZ0cF80YWhoX29GLVFhVmVmWmREdWtvTUstNE5aODd3TmpzVEhMRlBjZFlIY2pSdUtzUmVvMkc3OURleDFDS09neXh6QjAwdkIzYVAyNTFadzQ3TFNIdzI0Z0ZhZGhQUFhleW9xdVJiVzAxTFpTN1dqMGJOTlByVlhUNFFRUzU3TXVweWhQWGxSQU92aXhiNnR3V0wwRGxLTVdLb3AySHdDVDVxOXRoQVRPUkxRdHh1YkVSdzZrY1p3aWExVUVOZHdWSmZGX0QyQlJTX0FZaktrZ3FNX1FxUkNhbXctS0NKUkxhekJRVXkyUEotNVBUOHJ2ZDAwNW1nRGpsbklVdXl4QkVKMFJNVzF4RXR0VU1GTUZja0pwcndHOUtONWVF?oc=5' target='_blank'>米5月消費者物価指数と6月17-18日のFOMCに向けて - sbisec.co.jp</a> <span class='date'>(06/10 02:21)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMilgNBVV95cUxPRTFTU1pjdFBiV0JVVGNhYnNvMXBRQy10T0xWM0FvcktGYm9KaF9VTEtkTEZ0TXB0R0JadnhKX2cxc09HSEZiLTRaT20xWGRxcS13SUZsR2F5TnVDNFFmcTVGcksxRTV2d0pjcmgzOUNIMkd1VlhqZHQwT05WcTE2ejdGRENhX3JoRURhLVVwTkFUUGRaV0pkemVXa19NLVp0RC15U1BuNVhuU2dTY1k3cHptR3N6WEN5V1dkUUZJS2FmRGlWQXFoalRyY0YtLXdsWHlFOW9EWGlRLVBTc2RoQ3FhbGVQWWJyQTFGdlFLeDFpSXJ3WGVweHZOMHA3cGJBT2VUS0FneTB4Y1FNZ1JuNjkwNldyMXQ1TVlOZGUxcGplMHR2Y09vc3JkaVVlZDZFM0EwS09TNzh2UW9UOHJSWld5NmFxRDRlQW5WUGxCcjNoZGI5LWE5YkpjM0Q5Nzl0Ykk1VDRteE54QnFOMjZfMUFnemhrU0FMSHVnSkFnTF8xNnZ0Nk4wcXIyNmJyWkZENWhfSlF3?oc=5' target='_blank'>マーケット - sbisec.co.jp</a> <span class='date'>(06/09 09:04)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMirwNBVV95cUxQUE1qdkZLZmplQmpNSUNDOTJLV1F0VjRuQmE1MlNjWWlKelVqYW9yMHNvTVZuR2Y1RHpOak94bkRRUDVYNmRjZnJDZ3FnQXp6VnROT2NPMjNjd3JwbkpFM2s4dFFIS1VSNVRZNXhId2g4U0x5ZXpfdkdDMHF3U2pzajFWY0p3dUsweFJlanlQWDRjSkxJQXdkeEVhV09nc2FhNXg1VlNEVHRZT05UeW5jVGJqbS1sbkhZcU5uZWlTbTlid0V2ZGd2SDNQZGYycVBwOVlCcUM2cmprS2pqQUdPeFFWYmhBQ2kxTGNqbTgtaFhWNnpiZlNuQS1lQ2g1cUJ0emN6UWEtRTBRbVJUM1Y3Q2gzN3dTSmd4Yk5rdDZhTDJ5QXFJM1V6U1NLSnBmdEN6UWF4TUhzQjFRSHduTnlFTTBMT1RoS3dyT2FBaHNKSXN0eXBucWNUZWl5NTVtRDVWMW5lZWxsSXkxWEZTY2x3RVZfRlZRMlpXb3M3YTdFV2FrYVVVYWx6UVVXdS1KZmdpXzdINlU0blIwYkdLVjdHVkZYU3Z0eWpmWHJyWWs0TQ?oc=5' target='_blank'>マーケット - sbisec.co.jp</a> <span class='date'>(06/04 18:45)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMiYkFVX3lxTFBnWEpNVklGTXFPcDA0XzA4ZFpDYUJIT3p4SDYxVmdLcndZN1J6TVpia1U5SFY1NkpyZU5MbDdyRF9mMF8yX21nYXZSbE13MmhYQkpLNHdsYklUU3VHWHAxLVFn?oc=5' target='_blank'>世界の“次なる成長市場”に、信託報酬0.099%でアクセス『SBIネクスト・フロンティア高配当株式ファンド（年4回決算型）』の設定・運用開始(SBIグローバルアセットマネジメント)｜ニュースリリース - sbigroup.co.jp</a> <span class='date'>(06/06 03:42)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMiRkFVX3lxTE03bG5OMmxNRmZ6TGhBVmhkWmpYSVZycndZNUZjcGpLS0U3b3VEb0NyZWdYRVJpV2t6ZDNDVGVoVEVsSE1MMEE?oc=5' target='_blank'>口座管理 - sbisec.co.jp</a> <span class='date'>(05/17 09:35)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMiZkFVX3lxTFBmbkhnRTZST21LbUwyNWhRSjFmTkd6TTRzVVUxc0hJbzFrY3RPQmZfcDlMVjlxV0lpejBtMEQ0Y2IwSkgxSE1zY09tQWx0aEVCTnRsaUx4R3V1amU5SWR5a1hJVnhVUQ?oc=5' target='_blank'>JCBオリジナルシリーズでのクレジットカード投信積立サービス開始のお知らせ(SBI証券)－ PR情報 - sbigroup.co.jp</a> <span class='date'>(05/22 07:00)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMib0FVX3lxTE1HTkc1RTdBc0Q0WlhIY1p0Q0VwM3ZOUHY3ZXZac2J2WE1tanh2b0U4T1VJS0hrYlBadm5DN21yVll0NGlYS203Um1uT0Z1Mi1JMlN3blBGUF9pcUZlSXUyOVc2S09RWk9OTjc5MHJWaw?oc=5' target='_blank'>三井住友FG SBIと共同で新会社設立へ 資産運用サービス強化 | NHK - nhk.or.jp</a> <span class='date'>(06/03 12:09)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMif0FVX3lxTE9QRzN4QTBwU3E3OHNBUnB2bHlYSUloVGxXdDA4b09nNHBSdU1EZlZlVEJqRVNNcjFWU3ctV3YzWTRmVzJ3NVVwNWM4bkp1NEpDYWxPZ3NnMXRid2o4cC13eEVxOWN4QlpkVUx5NUNIUGdvRU5EWkhsLTRaTlY0V28?oc=5' target='_blank'>ドコモ、住信SBIネット銀行買収--マネックス証券はどうなる？ SBI証券との「2枚看板」懸念に回答 - Yahoo!ニュース</a> <span class='date'>(05/29 07:00)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMiYkFVX3lxTE9UWmt3cUpySV9KRE8xS09jWjJqYnJOaXRwQkdzY2FjeVNSNnRQY3VlWUxwUmZPMGFzNHFGX1o0Ujg4ajltempvdjBFaVlkOGVTUjJ5UHEtVlROTGVNQnAwcUNn?oc=5' target='_blank'>『SBI・iシェアーズ・ゴールドファンド（為替ヘッジあり／為替ヘッジなし）』の純資産総額合計800億円突破のお知らせ - sbigroup.co.jp</a> <span class='date'>(06/06 03:42)</span></li>
-<li><a href='https://news.google.com/rss/articles/CBMihgNBVV95cUxNNmc2STJ3M3BSVm4zenVjRDhabFBNdlNwdHFOZWhZYm1FNFFQajFLbmN2djI4MU1YWDhXTmpWcGpjOGY1YWU5SWNhM0N0Z3FtaU9Hb1I3VXFDU01FcnFVNDVCM2JQYTNJWU1zSWxfczlrZWV0R2JRa0U4R1NQVlcwSGh2UVpSS056UjZnWjMtUnJpNEJQM3BOLXk3QUJ4cHBJYkFHNW9qcXRpZlpINC04Um5yVUVvNkktQmozMXZXallYR3IwMlEzSHhwOXZNbE5uZUlHUTZ1clF0a2M1MWtVTjFKZThnWmlpRVJxZGF0VE45QkRTMFRacks3dXZMaTdNX3VOdGl2djdTcWxmVURoRHZEVDdIRmFaNmM4V29BLTQ4U1NXeWxReGZGUU1CbjBoM215VEIxNk4tY2ttWFRhbFR4ekNrcDF3andndVFzdHYtRzZ5X29CVWdrSklnUGhnUlFPM0x2ZUpCeGo1eTVXSTFCaUI2MnkwRVhjc3pvX1J5WWR2NFE?oc=5' target='_blank'>ブロードコム（AVGO）AI需要が牽引、売上過去最高~粗利益率も業界トップ水準に！ - sbisec.co.jp</a> <span class='date'>(06/06 07:33)</span></li>
-</ul>
-</div>
-
-        
-        <div class="section">
-            <h2>💡 今日の格言</h2>
-            <p style="font-size: 1.1em; font-style: italic; color: #2c3e50;">「全盛期？これからだよ」 - 三浦知良</p>
+        <div class="tab-content" id="taisho">
+            
+    <div class="news-section scroll-fade">
+        <h2><div class="company-icon">大正</div>大正製薬 最新ニュース</h2>
+        <ul class="news-list">
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiZEFVX3lxTFA0YWl6eEp1RnNWMl83ekJ4U2U4V1NpOXdrNVF3SHRnZHg5ZlF3T3RvVWo2RWhiZEg2WEo5VnpTVTg5c0xtaElGSjBPUEdRQkk1Rno1d1dmZTNZdkpXTlcwNkExMjU?oc=5' target='_blank'>海外戦略「正直、欲しいのは米国」「東南アジアで品ぞろえ増やす」…大正製薬HD・上原茂社長〈中〉 - 読売新聞オンライン</a>
+                <div class='news-date'>06/09 03:01</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMibEFVX3lxTE93aFkzWk1uOUw3SUQyVUM4VHZjNkdfZmtoM2xyMjl4NXhOTkx4YUVOcW1LVllhdnNZR0NXM0U5VV9oalVXaHdUUXVReWhkbU9lTXYxYlRGandZZVRpc1J3MHRrQ0Fwb1d4NEhnbg?oc=5' target='_blank'>大正製薬、日常的にストレスを受ける毛髪に対してボタンピエキスがその悪影響を軽減し強い黒髪を維持する可能性を示唆 - 日本経済新聞</a>
+                <div class='news-date'>06/05 05:57</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiR0FVX3lxTE50MTVfM1dkNnNUd1lYMGx3R19DOXVaQ096S0Y3MTdkUDI2ZUYzYTVZd1pVdkJ0dGdDbmZGRWNwWlk0TURha3FR?oc=5' target='_blank'>安全への取り組み - taisho.co.jp</a>
+                <div class='news-date'>05/13 00:40</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiSEFVX3lxTE40blUyMExLNmNKSENHdjVxbzh1UzlRUlFTM3BKZ05ZQlg4SzQtMXFFWVlGVTJVaW5GLXR1SFpUTU9KdmIxWmZBb9IBTkFVX3lxTE44amR2NDhlNXJrc0RqY1p2TXR4U1hLaU5PaWtTNHZUaTd5NUNHZXloTGtnbkw1amFqa0FIbDRycHdUU1lkcC11clRoeENoQQ?oc=5' target='_blank'>〔人事〕大正製薬ホールディングス（6月20日付）ほか - 日刊薬業</a>
+                <div class='news-date'>06/05 05:15</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiREFVX3lxTE1XYTEzSUptZXZrZ25XMVN0TW1yc0R6d2I2NlNvYm9lTEpVbkZkNk1qNTJxUU9SSVVYTTZ6QVJBT25wajlk?oc=5' target='_blank'>大正製薬が展開中の「リポビタンDX×ストリートファイターII」コラボゲームに勝ち抜き戦タイプの「EXTRAモード」が登場 - @DIME アットダイム</a>
+                <div class='news-date'>06/09 08:04</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiR0FVX3lxTE4xZUx5X0NGNndFOXhiUzMzRF85b2JzU0MtTnFfVC1GYWp6OWM0bEZackpiTTMzdV9xaXNwV2Q2M3YyZGRqOW9R?oc=5' target='_blank'>夏風邪と冬風邪・・・症状の感じ方が違うのはなぜ？ - newscast.jp</a>
+                <div class='news-date'>06/10 01:00</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMigwFBVV95cUxNQmh6TC1yekFwZkZwZkEya2UyVm1hZms5NDhOQWRhR24xcmlFek16X2pDdVcyNUR0NmhLdGhRMnVVZDhHN2Z6VEowNzM1OG9GTExXckxiWVRzNEZwTTByWk14NFcwZ2xYWk5RblFWU2dGdWUzVWZORUdqVFFYY25MRDhVNA?oc=5' target='_blank'>大正製薬はテレビと YouTube の統合マーケティングで ROI 向上、マーケティングの責任者が道のりを語る - Think with Google</a>
+                <div class='news-date'>04/22 07:45</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiTkFVX3lxTE1NVER2S3NHc2JqZEh0VUxsUENBUWFLT0NOMnctVkRFYTYtWDRwWHVfbWN4T2lpSU52NE1RQkNzVnhweGdZZ0M0Z2l4N3FBdw?oc=5' target='_blank'>リポビタンDチャレンジカップ2025応援キャンペーン開催！ - アットプレス</a>
+                <div class='news-date'>06/04 02:00</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiU0FVX3lxTE0yUk1HMENuc1FoRi14djFiRGJOajhlQXhjUEdaVFhvSE5KR0dpd25haWcyZ0VJRm5QQlJ2SU1tcy15Ymw0eVlBRHh0c3NNRUZ2QjZN?oc=5' target='_blank'>大正製薬 熱中症対策訴え 江の島でごみ拾い - 東京新聞デジタル</a>
+                <div class='news-date'>05/31 22:19</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiT0FVX3lxTE9yaFJkcTB6Q2JrRVIxVVJ4blRzMW5PNUZtVV9SRFd4cVgyUlVzUFZsbzl2UVJIeXdvZHI4aEhkVVRTTjE4ejJwZjB4VFRRZ1U?oc=5' target='_blank'>長谷工不動産、大正製薬北日本支店跡地に分譲マンション - リアルエコノミー</a>
+                <div class='news-date'>05/19 07:00</div>
+            </li>
+            
+        </ul>
+    </div>
+    
         </div>
         
-        <div class="section">
-            <h2>📘 今日のショートストーリー</h2>
-            <p style="color: #34495e;">子供が描いた絵に、人生で一番大切なものが詰まっていた。</p>
+        <div class="tab-content" id="sbi">
+            
+    <div class="news-section scroll-fade">
+        <h2><div class="company-icon">SBI</div>SBI証券 最新ニュース</h2>
+        <ul class="news-list">
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMilgNBVV95cUxPRTFTU1pjdFBiV0JVVGNhYnNvMXBRQy10T0xWM0FvcktGYm9KaF9VTEtkTEZ0TXB0R0JadnhKX2cxc09HSEZiLTRaT20xWGRxcS13SUZsR2F5TnVDNFFmcTVGcksxRTV2d0pjcmgzOUNIMkd1VlhqZHQwT05WcTE2ejdGRENhX3JoRURhLVVwTkFUUGRaV0pkemVXa19NLVp0RC15U1BuNVhuU2dTY1k3cHptR3N6WEN5V1dkUUZJS2FmRGlWQXFoalRyY0YtLXdsWHlFOW9EWGlRLVBTc2RoQ3FhbGVQWWJyQTFGdlFLeDFpSXJ3WGVweHZOMHA3cGJBT2VUS0FneTB4Y1FNZ1JuNjkwNldyMXQ1TVlOZGUxcGplMHR2Y09vc3JkaVVlZDZFM0EwS09TNzh2UW9UOHJSWld5NmFxRDRlQW5WUGxCcjNoZGI5LWE5YkpjM0Q5Nzl0Ykk1VDRteE54QnFOMjZfMUFnemhrU0FMSHVnSkFnTF8xNnZ0Nk4wcXIyNmJyWkZENWhfSlF3?oc=5' target='_blank'>マーケット - sbisec.co.jp</a>
+                <div class='news-date'>06/09 09:04</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiYkFVX3lxTFBnWEpNVklGTXFPcDA0XzA4ZFpDYUJIT3p4SDYxVmdLcndZN1J6TVpia1U5SFY1NkpyZU5MbDdyRF9mMF8yX21nYXZSbE13MmhYQkpLNHdsYklUU3VHWHAxLVFn?oc=5' target='_blank'>世界の“次なる成長市場”に、信託報酬0.099%でアクセス『SBIネクスト・フロンティア高配当株式ファンド（年4回決算型）』の設定・運用開始(SBIグローバルアセットマネジメント)｜ニュースリリース - sbigroup.co.jp</a>
+                <div class='news-date'>06/06 03:42</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiRkFVX3lxTE03bG5OMmxNRmZ6TGhBVmhkWmpYSVZycndZNUZjcGpLS0U3b3VEb0NyZWdYRVJpV2t6ZDNDVGVoVEVsSE1MMEE?oc=5' target='_blank'>口座管理 - sbisec.co.jp</a>
+                <div class='news-date'>05/17 09:35</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMirwNBVV95cUxQUE1qdkZLZmplQmpNSUNDOTJLV1F0VjRuQmE1MlNjWWlKelVqYW9yMHNvTVZuR2Y1RHpOak94bkRRUDVYNmRjZnJDZ3FnQXp6VnROT2NPMjNjd3JwbkpFM2s4dFFIS1VSNVRZNXhId2g4U0x5ZXpfdkdDMHF3U2pzajFWY0p3dUsweFJlanlQWDRjSkxJQXdkeEVhV09nc2FhNXg1VlNEVHRZT05UeW5jVGJqbS1sbkhZcU5uZWlTbTlid0V2ZGd2SDNQZGYycVBwOVlCcUM2cmprS2pqQUdPeFFWYmhBQ2kxTGNqbTgtaFhWNnpiZlNuQS1lQ2g1cUJ0emN6UWEtRTBRbVJUM1Y3Q2gzN3dTSmd4Yk5rdDZhTDJ5QXFJM1V6U1NLSnBmdEN6UWF4TUhzQjFRSHduTnlFTTBMT1RoS3dyT2FBaHNKSXN0eXBucWNUZWl5NTVtRDVWMW5lZWxsSXkxWEZTY2x3RVZfRlZRMlpXb3M3YTdFV2FrYVVVYWx6UVVXdS1KZmdpXzdINlU0blIwYkdLVjdHVkZYU3Z0eWpmWHJyWWs0TQ?oc=5' target='_blank'>マーケット - sbisec.co.jp</a>
+                <div class='news-date'>06/04 18:45</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiZkFVX3lxTFBmbkhnRTZST21LbUwyNWhRSjFmTkd6TTRzVVUxc0hJbzFrY3RPQmZfcDlMVjlxV0lpejBtMEQ0Y2IwSkgxSE1zY09tQWx0aEVCTnRsaUx4R3V1amU5SWR5a1hJVnhVUQ?oc=5' target='_blank'>JCBオリジナルシリーズでのクレジットカード投信積立サービス開始のお知らせ(SBI証券)－ PR情報 - sbigroup.co.jp</a>
+                <div class='news-date'>05/22 07:00</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMif0FVX3lxTE9QRzN4QTBwU3E3OHNBUnB2bHlYSUloVGxXdDA4b09nNHBSdU1EZlZlVEJqRVNNcjFWU3ctV3YzWTRmVzJ3NVVwNWM4bkp1NEpDYWxPZ3NnMXRid2o4cC13eEVxOWN4QlpkVUx5NUNIUGdvRU5EWkhsLTRaTlY0V28?oc=5' target='_blank'>ドコモ、住信SBIネット銀行買収--マネックス証券はどうなる？ SBI証券との「2枚看板」懸念に回答 - Yahoo!ニュース</a>
+                <div class='news-date'>05/29 07:00</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMib0FVX3lxTE1HTkc1RTdBc0Q0WlhIY1p0Q0VwM3ZOUHY3ZXZac2J2WE1tanh2b0U4T1VJS0hrYlBadm5DN21yVll0NGlYS203Um1uT0Z1Mi1JMlN3blBGUF9pcUZlSXUyOVc2S09RWk9OTjc5MHJWaw?oc=5' target='_blank'>三井住友FG SBIと共同で新会社設立へ 資産運用サービス強化 | NHK - nhk.or.jp</a>
+                <div class='news-date'>06/03 12:09</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMihgNBVV95cUxNNmc2STJ3M3BSVm4zenVjRDhabFBNdlNwdHFOZWhZYm1FNFFQajFLbmN2djI4MU1YWDhXTmpWcGpjOGY1YWU5SWNhM0N0Z3FtaU9Hb1I3VXFDU01FcnFVNDVCM2JQYTNJWU1zSWxfczlrZWV0R2JRa0U4R1NQVlcwSGh2UVpSS056UjZnWjMtUnJpNEJQM3BOLXk3QUJ4cHBJYkFHNW9qcXRpZlpINC04Um5yVUVvNkktQmozMXZXallYR3IwMlEzSHhwOXZNbE5uZUlHUTZ1clF0a2M1MWtVTjFKZThnWmlpRVJxZGF0VE45QkRTMFRacks3dXZMaTdNX3VOdGl2djdTcWxmVURoRHZEVDdIRmFaNmM4V29BLTQ4U1NXeWxReGZGUU1CbjBoM215VEIxNk4tY2ttWFRhbFR4ekNrcDF3andndVFzdHYtRzZ5X29CVWdrSklnUGhnUlFPM0x2ZUpCeGo1eTVXSTFCaUI2MnkwRVhjc3pvX1J5WWR2NFE?oc=5' target='_blank'>ブロードコム（AVGO）AI需要が牽引、売上過去最高~粗利益率も業界トップ水準に！ - sbisec.co.jp</a>
+                <div class='news-date'>06/06 07:33</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMiYkFVX3lxTE9rZjFESVJzOTNVRnpFOWtXVHVhb0s0RkpWOTJYazItbW1lOE1WajluNk1mYXg2VWtnT3BCbkowOW5VVWZnOTc0T3ZBdEh4eUhNdnhpRDdpRjZzV21Zd2xvRkh3?oc=5' target='_blank'>国内初となる証券総合口座1,400万口座達成のお知らせ - sbigroup.co.jp</a>
+                <div class='news-date'>03/11 07:00</div>
+            </li>
+            
+            <li class="news-item">
+                <a href='https://news.google.com/rss/articles/CBMif0FVX3lxTFBiWnVZRHJJU1BvUjhxUHVRWEJXVjh6SmVnelk0Rm9lSThCbm9fT1NxMGI2b1luVHhVS0M2TDBmb1I0VVVqVEtWRVVwd3JIUlNJa2tqQXJ1cDRoZF95MGZXbFJWY0ZwQ19BcWJGZDBUbHROa214NzlGTG5NaVEzNms?oc=5' target='_blank'>野口 航太郎 | 社員紹介（新卒入社） | 採用情報 - sbisec.co.jp</a>
+                <div class='news-date'>05/28 09:34</div>
+            </li>
+            
+        </ul>
+    </div>
+    
         </div>
         
+        </div>
+
+        <!-- 特別セクション -->
+        <div class="special-sections">
+            <div class="special-section quote-section scroll-fade">
+                <h2>💡 今日の格言</h2>
+                <div class="quote-text">
+                    「全盛期？これからだよ」 - 三浦知良
+                </div>
+            </div>
+
+            <div class="special-section story-section scroll-fade">
+                <h2>📘 今日のショートストーリー</h2>
+                <div class="story-text">
+                    小さなカフェで見かけた、老夫婦の静かな時間に心を打たれた。
+                </div>
+            </div>
+        </div>
+
+        <!-- フッター -->
         <div class="footer">
-            最終更新: 2025-06-10 04:17:31 JST<br>
-            自動生成システムにより作成
+            最終更新: 2025-06-10 09:17:57 JST<br>
+            自動生成システムにより作成 | Powered by GitHub Actions
         </div>
     </div>
+
+    <script>
+        // タブ切り替え機能
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetTab = this.getAttribute('data-tab');
+
+                    // アクティブ状態をリセット
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    // 新しいアクティブ状態を設定
+                    this.classList.add('active');
+                    document.getElementById(targetTab).classList.add('active');
+                });
+            });
+
+            // スクロールアニメーション
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            // スクロールフェード要素を監視
+            document.querySelectorAll('.scroll-fade').forEach(el => {
+                observer.observe(el);
+            });
+
+            // ニュースアイテムにホバーエフェクト
+            document.querySelectorAll('.news-item').forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateX(10px)';
+                });
+
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateX(0)';
+                });
+            });
+        });
+    </script>
 </body>
 </html>
