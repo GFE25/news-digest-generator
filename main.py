@@ -1,78 +1,273 @@
 import feedparser
 from datetime import datetime
+import time
+import random
 
+# RSS ソースの定義
 rss_sources = {
     "ソフトバンク": "https://news.google.com/rss/search?q=ソフトバンク&hl=ja&gl=JP&ceid=JP:ja",
     "大正製薬": "https://news.google.com/rss/search?q=大正製薬&hl=ja&gl=JP&ceid=JP:ja",
     "SBI証券": "https://news.google.com/rss/search?q=SBI証券&hl=ja&gl=JP&ceid=JP:ja"
 }
 
-today = datetime.now().strftime('%Y年%m月%d日')
-quote = "「全盛期？これからだよ」 - 三浦知良"
-story = "電車で出会った彼女との何気ない5分間の会話が、ずっと心に残っている。"
+def get_news_for_company(company, url, max_retries=3):
+    """特定の会社のニュースを取得する関数"""
+    for attempt in range(max_retries):
+        try:
+            print(f"🔍 {company} ニュース取得中 (試行 {attempt + 1}/{max_retries}): {url}")
+            
+            # フィードを取得
+            feed = feedparser.parse(url)
+            
+            # ステータスコードをチェック
+            if hasattr(feed, 'status') and feed.status != 200:
+                print(f"⚠️  {company}: HTTP ステータス {feed.status}")
+                if attempt < max_retries - 1:
+                    time.sleep(2)  # 2秒待機してリトライ
+                    continue
+            
+            # エントリが存在するかチェック
+            if not hasattr(feed, 'entries') or len(feed.entries) == 0:
+                print(f"⚠️  {company}: エントリが見つかりません")
+                if attempt < max_retries - 1:
+                    time.sleep(2)
+                    continue
+                return []
+            
+            print(f"✅ {company} 件数: {len(feed.entries)}")
+            return feed.entries[:10]  # 最大10件
+            
+        except Exception as e:
+            print(f"❌ {company} エラー (試行 {attempt + 1}): {e}")
+            if attempt < max_retries - 1:
+                time.sleep(2)
+            else:
+                print(f"❌ {company}: 最大試行回数に達しました")
+                return []
+    
+    return []
 
-news_sections = ""
-for company, url in rss_sources.items():
-    print(f"🔍 {company} ニュース取得中: {url}")
-    feed = feedparser.parse(url)
-    print(f"✅ {company} 件数: {len(feed.entries)}")
-
+def generate_news_section(company, entries):
+    """ニュースセクションのHTMLを生成"""
+    if not entries:
+        return f"""
+<div class="section">
+    <h2>📰 {company} の最新ニュース</h2>
+    <p class="no-news">現在ニュースを取得できません。後ほど再度お試しください。</p>
+</div>
+"""
+    
     items = ""
-    for entry in feed.entries[:10]:
-        title = entry.title
-        link = entry.link
-        items += f"<li><a href='{link}' target='_blank'>{title}</a></li>\n"
-
-    if items:
-        news_sections += f"""
+    for entry in entries:
+        try:
+            title = entry.title if hasattr(entry, 'title') else 'タイトルなし'
+            link = entry.link if hasattr(entry, 'link') else '#'
+            
+            # 日付があれば表示
+            pub_date = ""
+            if hasattr(entry, 'published_parsed') and entry.published_parsed:
+                try:
+                    date_obj = datetime(*entry.published_parsed[:6])
+                    pub_date = f" <span class='date'>({date_obj.strftime('%m/%d %H:%M')})</span>"
+                except:
+                    pass
+            
+            # HTMLエスケープ（簡易版）
+            title = title.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+            
+            items += f"<li><a href='{link}' target='_blank'>{title}</a>{pub_date}</li>\n"
+            
+        except Exception as e:
+            print(f"⚠️  エントリ処理エラー: {e}")
+            continue
+    
+    return f"""
 <div class="section">
     <h2>📰 {company} の最新ニュース</h2>
-    <ul>{items}</ul>
-</div>
-"""
-    else:
-        news_sections += f"""
-<div class="section">
-    <h2>📰 {company} の最新ニュース</h2>
-    <p>ニュースが取得できませんでした。</p>
+    <ul class="news-list">{items}</ul>
 </div>
 """
 
-# --- HTML全体テンプレート
-html_content = f"""<!DOCTYPE html>
+def main():
+    """メイン処理"""
+    print("=" * 50)
+    print("📰 NEWS DIGEST 生成開始")
+    print("=" * 50)
+    
+    # 現在の日時
+    today = datetime.now().strftime('%Y年%m月%d日')
+    current_time = datetime.now().strftime('%H:%M')
+    
+    # 格言とストーリー
+    quote = "「全盛期？これからだよ」 - 三浦知良"
+    story = "電車で出会った彼女との何気ない5分間の会話が、ずっと心に残っている。"
+    
+    # ニュースセクションを生成
+    news_sections = ""
+    total_articles = 0
+    
+    for company, url in rss_sources.items():
+        entries = get_news_for_company(company, url)
+        news_sections += generate_news_section(company, entries)
+        total_articles += len(entries)
+        
+        # レート制限対策：各リクエスト間に少し待機
+        time.sleep(1)
+    
+    print(f"📊 合計記事数: {total_articles}")
+    
+    # HTMLテンプレート（改良版）
+    html_content = f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>11BP 生成AI勉強会 NEWS DIGEST</title>
     <style>
-        body {{ font-family: sans-serif; background: #f9f9f9; padding: 2em; }}
-        h1 {{ color: #2c3e50; }}
-        .section {{ background: white; padding: 1.5em; margin-bottom: 1.5em; border-radius: 8px; box-shadow: 0 0 8px #ddd; }}
-        li {{ margin-bottom: 0.5em; }}
-        a {{ text-decoration: none; color: #2980b9; }}
+        body {{ 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hiragino Sans', sans-serif; 
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 1em;
+            margin: 0;
+            line-height: 1.6;
+        }}
+        
+        .container {{
+            max-width: 900px;
+            margin: 0 auto;
+        }}
+        
+        h1 {{ 
+            color: #2c3e50; 
+            text-align: center;
+            background: white;
+            padding: 1.5em;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 1.5em;
+        }}
+        
+        .header-info {{
+            text-align: center;
+            background: #34495e;
+            color: white;
+            padding: 1em;
+            border-radius: 8px;
+            margin-bottom: 2em;
+        }}
+        
+        .section {{ 
+            background: white; 
+            padding: 2em; 
+            margin-bottom: 1.5em; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid #3498db;
+        }}
+        
+        .section h2 {{
+            margin-top: 0;
+            color: #2c3e50;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 0.5em;
+        }}
+        
+        .news-list li {{ 
+            margin-bottom: 0.8em;
+            padding: 0.5em 0;
+            border-bottom: 1px solid #ecf0f1;
+        }}
+        
+        .news-list li:last-child {{
+            border-bottom: none;
+        }}
+        
+        a {{ 
+            text-decoration: none; 
+            color: #2980b9;
+            font-weight: 500;
+        }}
+        
+        a:hover {{
+            color: #3498db;
+            text-decoration: underline;
+        }}
+        
+        .date {{
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }}
+        
+        .no-news {{
+            color: #e74c3c;
+            font-style: italic;
+        }}
+        
+        .footer {{
+            text-align: center;
+            color: #7f8c8d;
+            margin-top: 2em;
+            padding: 1em;
+            background: white;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }}
+        
+        @media (max-width: 768px) {{
+            body {{ padding: 0.5em; }}
+            .section {{ padding: 1.5em; }}
+            h1 {{ font-size: 1.5em; }}
+        }}
     </style>
 </head>
 <body>
-    <h1>11BP 生成AI勉強会 NEWS DIGEST</h1>
-    <p><strong>日付:</strong> {today}</p>
-
-    {news_sections}
-
-    <div class="section">
-        <h2>💡 今日の格言</h2>
-        <p>{quote}</p>
-    </div>
-
-    <div class="section">
-        <h2>📘 今日のショートストーリー</h2>
-        <p>{story}</p>
+    <div class="container">
+        <h1>11BP 生成AI勉強会 NEWS DIGEST</h1>
+        
+        <div class="header-info">
+            <p><strong>📅 日付:</strong> {today} | <strong>🕐 更新時刻:</strong> {current_time}</p>
+            <p><strong>📊 総記事数:</strong> {total_articles}件</p>
+        </div>
+        
+        {news_sections}
+        
+        <div class="section">
+            <h2>💡 今日の格言</h2>
+            <p style="font-size: 1.1em; font-style: italic; color: #2c3e50;">{quote}</p>
+        </div>
+        
+        <div class="section">
+            <h2>📘 今日のショートストーリー</h2>
+            <p style="color: #34495e;">{story}</p>
+        </div>
+        
+        <div class="footer">
+            最終更新: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} JST<br>
+            自動生成システムにより作成
+        </div>
     </div>
 </body>
 </html>
 """
 
-# --- HTMLファイル出力
-with open("index.html", "w", encoding="utf-8") as f:
-    f.write(html_content)
+    # HTMLファイル出力
+    try:
+        with open("index.html", "w", encoding="utf-8") as f:
+            f.write(html_content)
+        print("✅ index.html を正常に生成しました")
+        
+        # ファイルサイズを確認
+        import os
+        file_size = os.path.getsize("index.html")
+        print(f"📁 ファイルサイズ: {file_size:,} bytes")
+        
+    except Exception as e:
+        print(f"❌ ファイル書き込みエラー: {e}")
+        raise
+    
+    print("=" * 50)
+    print("🎉 NEWS DIGEST 生成完了")
+    print("=" * 50)
 
-print("✅ index.html を生成しました。")
+if __name__ == "__main__":
+    main()
