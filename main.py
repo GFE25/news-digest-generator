@@ -141,6 +141,28 @@ def generate_individual_tabs(companies_data):
         """
     return tabs_content
 
+def generate_quote_tab(quote):
+    """格言タブのコンテンツを生成"""
+    return f"""
+    <div class="tab-content" id="quote">
+        <div class="special-section quote-section">
+            <h2>💡 今日の格言</h2>
+            <div class="quote-text">{quote}</div>
+        </div>
+    </div>
+    """
+
+def generate_story_tab(story):
+    """ストーリータブのコンテンツを生成"""
+    return f"""
+    <div class="tab-content" id="story">
+        <div class="special-section story-section">
+            <h2>📘 今日のショートストーリー</h2>
+            <div class="story-text">{story}</div>
+        </div>
+    </div>
+    """
+
 def main():
     """メイン処理"""
     print("=" * 50)
@@ -191,8 +213,10 @@ def main():
     # タブコンテンツ生成
     all_news_content = generate_all_news_tab(companies_data)
     individual_tabs_content = generate_individual_tabs(companies_data)
+    quote_tab_content = generate_quote_tab(quote)
+    story_tab_content = generate_story_tab(story)
     
-    # HTMLテンプレート（新デザイン対応）
+    # HTMLテンプレート（タブ機能拡張版）
     html_content = f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -205,6 +229,7 @@ def main():
             --secondary-color: #2c3e50;
             --accent-color: #e74c3c;
             --success-color: #27ae60;
+            --warning-color: #f39c12;
             --background-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --card-shadow: 0 10px 30px rgba(0,0,0,0.1);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -303,6 +328,7 @@ def main():
             transition: var(--transition);
             position: relative;
             overflow: hidden;
+            font-size: 0.9em;
         }}
 
         .tab-button::before {{
@@ -327,6 +353,25 @@ def main():
             color: white;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }}
+
+        /* 特殊タブボタンのスタイル */
+        .tab-button[data-tab="quote"] {{
+            border-color: var(--success-color);
+            color: var(--success-color);
+        }}
+
+        .tab-button[data-tab="quote"]::before {{
+            background: var(--success-color);
+        }}
+
+        .tab-button[data-tab="story"] {{
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }}
+
+        .tab-button[data-tab="story"]::before {{
+            background: var(--accent-color);
         }}
 
         /* ニュースセクション */
@@ -432,13 +477,6 @@ def main():
         }}
 
         /* 特別セクション */
-        .special-sections {{
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5em;
-            margin-top: 2em;
-        }}
-
         .special-section {{
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -447,6 +485,7 @@ def main():
             box-shadow: var(--card-shadow);
             transition: var(--transition);
             animation: slideInUp 0.9s ease-out;
+            margin-bottom: 1.5em;
         }}
 
         .special-section:hover {{
@@ -457,7 +496,7 @@ def main():
         .special-section h2 {{
             color: var(--secondary-color);
             margin-bottom: 1em;
-            font-size: 1.3em;
+            font-size: 1.5em;
         }}
 
         .quote-section {{
@@ -469,22 +508,54 @@ def main():
         }}
 
         .quote-text {{
-            font-size: 1.1em;
+            font-size: 1.2em;
             font-style: italic;
             color: var(--secondary-color);
             position: relative;
-            padding: 1em;
+            padding: 1.5em;
             background: rgba(39, 174, 96, 0.1);
-            border-radius: 10px;
+            border-radius: 15px;
+            line-height: 1.8;
+            text-align: center;
+        }}
+
+        .quote-text::before {{
+            content: '"';
+            font-size: 3em;
+            color: var(--success-color);
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-family: serif;
+        }}
+
+        .quote-text::after {{
+            content: '"';
+            font-size: 3em;
+            color: var(--success-color);
+            position: absolute;
+            bottom: -20px;
+            right: 20px;
+            font-family: serif;
         }}
 
         .story-text {{
             color: #34495e;
             line-height: 1.8;
             position: relative;
-            padding: 1em;
+            padding: 1.5em;
             background: rgba(231, 76, 60, 0.1);
-            border-radius: 10px;
+            border-radius: 15px;
+            font-size: 1.1em;
+        }}
+
+        .story-text::before {{
+            content: '📖';
+            font-size: 2em;
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            opacity: 0.3;
         }}
 
         /* フッター */
@@ -503,9 +574,23 @@ def main():
         @media (max-width: 768px) {{
             body {{ padding: 0.5em; }}
             .header h1 {{ font-size: 2em; }}
-            .tab-nav {{ flex-direction: column; }}
+            .tab-nav {{ 
+                flex-direction: column;
+                align-items: center;
+            }}
+            .tab-button {{
+                width: 200px;
+                text-align: center;
+            }}
             .news-section, .special-section {{ padding: 1.5em; }}
-            .special-sections {{ grid-template-columns: 1fr; }}
+        }}
+
+        @media (max-width: 480px) {{
+            .tab-button {{
+                width: 100%;
+                padding: 1em;
+                font-size: 0.85em;
+            }}
         }}
 
         /* スクロールアニメーション */
@@ -538,6 +623,8 @@ def main():
                 <button class="tab-button" data-tab="softbank">📱 ソフトバンク</button>
                 <button class="tab-button" data-tab="taisho">💊 大正製薬</button>
                 <button class="tab-button" data-tab="sbi">💰 SBI証券</button>
+                <button class="tab-button" data-tab="quote">💡 今日の格言</button>
+                <button class="tab-button" data-tab="story">📘 ショートストーリー</button>
             </div>
 
             <!-- すべてのニュース -->
@@ -547,23 +634,12 @@ def main():
 
             <!-- 個別企業タブ -->
             {individual_tabs_content}
-        </div>
 
-        <!-- 特別セクション -->
-        <div class="special-sections">
-            <div class="special-section quote-section scroll-fade">
-                <h2>💡 今日の格言</h2>
-                <div class="quote-text">
-                    {quote}
-                </div>
-            </div>
+            <!-- 格言タブ -->
+            {quote_tab_content}
 
-            <div class="special-section story-section scroll-fade">
-                <h2>📘 今日のショートストーリー</h2>
-                <div class="story-text">
-                    {story}
-                </div>
-            </div>
+            <!-- ストーリータブ -->
+            {story_tab_content}
         </div>
 
         <!-- フッター -->
@@ -621,6 +697,38 @@ def main():
                 item.addEventListener('mouseleave', function() {{
                     this.style.transform = 'translateX(0)';
                 }});
+            }});
+
+            // キーボードショートカット
+            document.addEventListener('keydown', function(e) {{
+                if (e.altKey) {{
+                    switch(e.key) {{
+                        case '1':
+                            e.preventDefault();
+                            document.querySelector('[data-tab="all"]').click();
+                            break;
+                        case '2':
+                            e.preventDefault();
+                            document.querySelector('[data-tab="softbank"]').click();
+                            break;
+                        case '3':
+                            e.preventDefault();
+                            document.querySelector('[data-tab="taisho"]').click();
+                            break;
+                        case '4':
+                            e.preventDefault();
+                            document.querySelector('[data-tab="sbi"]').click();
+                            break;
+                        case '5':
+                            e.preventDefault();
+                            document.querySelector('[data-tab="quote"]').click();
+                            break;
+                        case '6':
+                            e.preventDefault();
+                            document.querySelector('[data-tab="story"]').click();
+                            break;
+                    }}
+                }}
             }});
         }});
     </script>
