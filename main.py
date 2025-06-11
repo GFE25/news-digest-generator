@@ -7,8 +7,13 @@ import random
 rss_sources = {
     "ソフトバンク": "https://news.google.com/rss/search?q=ソフトバンク&hl=ja&gl=JP&ceid=JP:ja",
     "大正製薬": "https://news.google.com/rss/search?q=大正製薬&hl=ja&gl=JP&ceid=JP:ja",
-    "SBI証券": "https://news.google.com/rss/search?q=SBI証券&hl=ja&gl=JP&ceid=JP:ja"
+    "SBI証券": "https://news.google.com/rss/search?q=SBI証券&hl=ja&gl=JP&ceid=JP:ja",
+    "電通": "https://news.google.com/rss/search?q=電通&hl=ja&gl=JP&ceid=JP:ja",
+    "ガンホー": "https://news.google.com/rss/search?q=ガンホー&hl=ja&gl=JP&ceid=JP:ja",
+    "GO": "https://news.google.com/rss/search?q=株式会社GO タクシー&hl=ja&gl=JP&ceid=JP:ja",
+    "森ビル": "https://news.google.com/rss/search?q=森ビル&hl=ja&gl=JP&ceid=JP:ja"
 }
+
 
 def get_news_for_company(company, url, max_retries=3):
     """特定の会社のニュースを取得する関数"""
@@ -54,22 +59,29 @@ def filter_entries(company, entries):
     return entries
 
 def get_company_icon(company):
-    """企業アイコンを取得"""
     icon_map = {
         "ソフトバンク": "SB",
         "大正製薬": "大正",
-        "SBI証券": "SBI"
+        "SBI証券": "SBI",
+        "電通": "電通",
+        "ガンホー": "GH",
+        "GO": "GO",
+        "森ビル": "森"
     }
     return icon_map.get(company, company[:2])
 
 def get_tab_id(company):
-    """タブIDを取得"""
     tab_map = {
         "ソフトバンク": "softbank",
         "大正製薬": "taisho", 
-        "SBI証券": "sbi"
+        "SBI証券": "sbi",
+        "電通": "dentsu",
+        "ガンホー": "gungho",
+        "GO": "go",
+        "森ビル": "mori"
     }
     return tab_map.get(company, company.lower())
+
 
 def generate_news_items(entries):
     """ニュースアイテムのHTMLを生成"""
@@ -623,6 +635,10 @@ def main():
                 <button class="tab-button" data-tab="softbank">📱 ソフトバンク</button>
                 <button class="tab-button" data-tab="taisho">💊 大正製薬</button>
                 <button class="tab-button" data-tab="sbi">💰 SBI証券</button>
+                <button class="tab-button" data-tab="dentsu">📺 電通</button>
+                <button class="tab-button" data-tab="gungho">🎮 ガンホー</button>
+                <button class="tab-button" data-tab="go">🚕 GO</button>
+                <button class="tab-button" data-tab="mori">🏢 森ビル</button>
                 <button class="tab-button" data-tab="quote">💡 今日の格言</button>
                 <button class="tab-button" data-tab="story">📘 ショートストーリー</button>
             </div>
