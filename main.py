@@ -10,7 +10,7 @@ rss_sources = {
     "SBI証券": "https://news.google.com/rss/search?q=SBI証券&hl=ja&gl=JP&ceid=JP:ja",
     "電通": "https://news.google.com/rss/search?q=電通&hl=ja&gl=JP&ceid=JP:ja",
     "ガンホー": "https://news.google.com/rss/search?q=ガンホー&hl=ja&gl=JP&ceid=JP:ja",
-    "GO": "https://news.google.com/rss/search?q=GO+タクシー&hl=ja&gl=JP&ceid=JP:ja"
+    "GO": "https://news.google.com/rss/search?q=GO+タクシー&hl=ja&gl=JP&ceid=JP:ja",
     "森ビル": "https://news.google.com/rss/search?q=森ビル&hl=ja&gl=JP&ceid=JP:ja"
 }
 
@@ -81,7 +81,7 @@ def get_company_icon(company):
         "ソフトバンク": "SB",
         "大正製薬": "大正",
         "SBI証券": "SBI",
-        "電通": "電通",
+        "電通": "電",
         "ガンホー": "GH",
         "GO": "GO",
         "森ビル": "森"
