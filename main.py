@@ -55,8 +55,10 @@ def get_news_for_company(company, url, max_retries=3):
 def filter_entries(company, entries):
     """会社ごとにニュースをフィルタリング（例：ソフトバンクのホークス除外）"""
     if company == "ソフトバンク":
-        return [entry for entry in entries if "ホークス" not in entry.title]
+        excluded_keywords = ["ホークス", "野球", "選手", "打者", "投手", "試合", "球団"]
+        return [entry for entry in entries if not any(kw in entry.title for kw in excluded_keywords)]
     return entries
+
 
 def get_company_icon(company):
     icon_map = {
@@ -87,6 +89,9 @@ def generate_news_items(entries):
     """ニュースアイテムのHTMLを生成"""
     if not entries:
         return "<li class='news-item'><div style='color: #e74c3c; font-style: italic;'>現在ニュースを取得できません。後ほど再度お試しください。</div></li>"
+
+    # 日付でソート（新しい順）
+    entries.sort(key=lambda e: getattr(e, 'published_parsed', time.gmtime(0)), reverse=True)
     
     items = ""
     for entry in entries:
