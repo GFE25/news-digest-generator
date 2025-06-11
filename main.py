@@ -10,7 +10,7 @@ rss_sources = {
     "SBI証券": "https://news.google.com/rss/search?q=SBI証券&hl=ja&gl=JP&ceid=JP:ja",
     "電通": "https://news.google.com/rss/search?q=電通&hl=ja&gl=JP&ceid=JP:ja",
     "ガンホー": "https://news.google.com/rss/search?q=ガンホー&hl=ja&gl=JP&ceid=JP:ja",
-    "GO": "https://news.google.com/rss/search?q=株式会社GO タクシー&hl=ja&gl=JP&ceid=JP:ja",
+    "GO": "https://news.google.com/rss/search?q=GO+タクシー&hl=ja&gl=JP&ceid=JP:ja"
     "森ビル": "https://news.google.com/rss/search?q=森ビル&hl=ja&gl=JP&ceid=JP:ja"
 }
 
