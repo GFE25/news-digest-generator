@@ -15,8 +15,12 @@ rss_sources = {
 }
 
 
+from datetime import datetime, timedelta
+
 def get_news_for_company(company, url, max_retries=3):
-    """特定の会社のニュースを取得する関数"""
+    """特定の会社のニュースを取得する関数（1か月以内、最大10件まで）"""
+    one_month_ago = datetime.now() - timedelta(days=30)
+
     for attempt in range(max_retries):
         try:
             print(f"🔍 {company} ニュース取得中 (試行 {attempt + 1}/{max_retries}): {url}")
@@ -28,7 +32,7 @@ def get_news_for_company(company, url, max_retries=3):
             if hasattr(feed, 'status') and feed.status != 200:
                 print(f"⚠️  {company}: HTTP ステータス {feed.status}")
                 if attempt < max_retries - 1:
-                    time.sleep(2)  # 2秒待機してリトライ
+                    time.sleep(2)
                     continue
             
             # エントリが存在するかチェック
@@ -38,9 +42,20 @@ def get_news_for_company(company, url, max_retries=3):
                     time.sleep(2)
                     continue
                 return []
-            
-            print(f"✅ {company} 件数: {len(feed.entries)}")
-            return feed.entries[:10]  # 最大10件
+
+            # 一か月以内のニュースだけにフィルタ
+            filtered_entries = []
+            for entry in feed.entries:
+                if hasattr(entry, 'published_parsed') and entry.published_parsed:
+                    pub_date = datetime(*entry.published_parsed[:6])
+                    if pub_date >= one_month_ago:
+                        filtered_entries.append(entry)
+
+            # 最大10件まで
+            filtered_entries = filtered_entries[:10]
+
+            print(f"✅ {company} 件数: {len(filtered_entries)}（1か月以内）")
+            return filtered_entries
             
         except Exception as e:
             print(f"❌ {company} エラー (試行 {attempt + 1}): {e}")
@@ -51,6 +66,7 @@ def get_news_for_company(company, url, max_retries=3):
                 return []
     
     return []
+
     
 def filter_entries(company, entries):
     """会社ごとにニュースをフィルタリング（例：ソフトバンクのホークス除外）"""
