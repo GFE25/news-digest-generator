@@ -71,7 +71,7 @@ def get_news_for_company(company, url, max_retries=3):
 def filter_entries(company, entries):
     """会社ごとにニュースをフィルタリング（例：ソフトバンクのホークス除外）"""
     if company == "ソフトバンク":
-        excluded_keywords = ["ホークス", "野球", "選手", "打者", "投手", "試合", "安打", "監督", "球場", "打点", "ヒット", "退場", "守護神", "球団"]
+        excluded_keywords = ["ホークス", "野球", "選手", "打者", "投手", "試合", "安打", "監督", "球場", "打点", "ヒット", "失点", "打球", "先発", "最下位", "起用", "退場", "守護神", "球団"]
         return [entry for entry in entries if not any(kw in entry.title for kw in excluded_keywords)]
     return entries
 
@@ -685,6 +685,12 @@ def main():
             自動生成システムにより作成 | Powered by GitHub Actions
         </div>
     </div>
+    
+<audio id="bg-music" autoplay loop>
+    <source src="明日へのチャレンジ_A.mp3" type="audio/mpeg">
+    お使いのブラウザはaudioタグをサポートしていません。
+</audio>
+
 
     <script>
         // タブ切り替え機能
