@@ -686,12 +686,6 @@ def main():
         </div>
     </div>
     
-<audio id="bg-music" autoplay loop>
-    <source src="明日へのチャレンジ_A.mp3" type="audio/mpeg">
-    お使いのブラウザはaudioタグをサポートしていません。
-</audio>
-
-
     <script>
         // タブ切り替え機能
         document.addEventListener('DOMContentLoaded', function() {{
