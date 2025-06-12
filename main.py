@@ -12,6 +12,10 @@ rss_sources = {
     "ガンホー": "https://news.google.com/rss/search?q=ガンホー&hl=ja&gl=JP&ceid=JP:ja",
     "GO": "https://news.google.com/rss/search?q=GO+タクシー&hl=ja&gl=JP&ceid=JP:ja",
     "森ビル": "https://news.google.com/rss/search?q=森ビル&hl=ja&gl=JP&ceid=JP:ja"
+    "Spotify": "https://news.google.com/rss/search?q=Spotify+OR+スポティファイ&hl=ja&gl=JP&ceid=JP:ja",
+    "Epic Games": "https://news.google.com/rss/search?q=\"Epic+Games\"+OR+エピック+OR+フォートナイト&hl=ja&gl=JP&ceid=JP:ja",
+    "富士電機": "https://news.google.com/rss/search?q=富士電機&hl=ja&gl=JP&ceid=JP:ja",
+    "ZOZO": "https://news.google.com/rss/search?q=ZOZO&hl=ja&gl=JP&ceid=JP:ja"
 }
 
 
@@ -85,6 +89,10 @@ def get_company_icon(company):
         "ガンホー": "GH",
         "GO": "GO",
         "森ビル": "森"
+        "Spotify": "♪",
+        "Epic Games": "🎮",
+        "富士電機": "富士",
+        "ZOZO": "ZZ"
     }
     return icon_map.get(company, company[:2])
 
@@ -97,6 +105,10 @@ def get_tab_id(company):
         "ガンホー": "gungho",
         "GO": "go",
         "森ビル": "mori"
+        "Spotify": "spotify",
+        "Epic Games": "epic",
+        "富士電機": "fuji",
+        "ZOZO": "zozo"
     }
     return tab_map.get(company, company.lower())
 
@@ -660,6 +672,10 @@ def main():
                 <button class="tab-button" data-tab="gungho">🎮 ガンホー</button>
                 <button class="tab-button" data-tab="go">🚕 GO</button>
                 <button class="tab-button" data-tab="mori">🏢 森ビル</button>
+                <button class="tab-button" data-tab="spotify">♪ Spotify</button>
+                <button class="tab-button" data-tab="epic">🎮 Epic Games</button>
+                <button class="tab-button" data-tab="fuji">⚡ 富士電機</button>
+                <button class="tab-button" data-tab="zozo">👕 ZOZO</button>
                 <button class="tab-button" data-tab="quote">💡 今日の格言</button>
                 <button class="tab-button" data-tab="story">📘 ショートストーリー</button>
             </div>
