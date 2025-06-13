@@ -12,8 +12,8 @@ rss_sources = {
     "ガンホー": "https://news.google.com/rss/search?q=ガンホー&hl=ja&gl=JP&ceid=JP:ja",
     "GO": "https://news.google.com/rss/search?q=GO+タクシー&hl=ja&gl=JP&ceid=JP:ja",
     "森ビル": "https://news.google.com/rss/search?q=森ビル&hl=ja&gl=JP&ceid=JP:ja"
-    "Spotify": "https://news.google.com/rss/search?q=Spotify+スポティファイ&hl=ja&gl=JP&ceid=JP:ja",
-    "Epic Games": "https://news.google.com/rss/search?q=\"Epic+Games\"+OR+エピック+OR+フォートナイト&hl=ja&gl=JP&ceid=JP:ja",
+    "Spotify": "https://news.google.com/rss/search?q=Spotify%20OR%20%E3%82%B9%E3%83%9D%E3%83%86%E3%82%A3%E3%83%95%E3%82%A1%E3%82%A4&hl=ja&gl=JP&ceid=JP:ja",
+    "Epic Games": "https://news.google.com/rss/search?q=%22Epic%20Games%22%20OR%20%E3%82%A8%E3%83%94%E3%83%83%E3%82%AF%20OR%20Fortnite&hl=ja&gl=JP&ceid=JP:ja",
     "富士電機": "https://news.google.com/rss/search?q=富士電機&hl=ja&gl=JP&ceid=JP:ja",
     "ZOZO": "https://news.google.com/rss/search?q=ZOZO&hl=ja&gl=JP&ceid=JP:ja"
 }
