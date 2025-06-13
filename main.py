@@ -89,7 +89,7 @@ def get_company_icon(company):
         "ガンホー": "GH",
         "GO": "GO",
         "森ビル": "森"
-        "Spotify": "♪",
+        "Spotify": "🎵",
         "Epic Games": "🎮",
         "富士電機": "富士",
         "ZOZO": "ZZ"
