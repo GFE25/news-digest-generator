@@ -83,15 +83,15 @@ def filter_entries(company, entries):
 def get_company_icon(company):
     icon_map = {
         "ソフトバンク": "SB",
-        "大正製薬": "大正",
+        "大正製薬": "大",
         "SBI証券": "SBI",
         "電通": "電",
         "ガンホー": "GH",
         "GO": "GO",
         "森ビル": "森"
-        "Spotify": "🎵",
-        "Epic Games": "🎮",
-        "富士電機": "富士",
+        "Spotify": "Spo",
+        "Epic Games": "EG",
+        "富士電機": "富",
         "ZOZO": "ZZ"
     }
     return icon_map.get(company, company[:2])
