@@ -15,7 +15,17 @@ rss_sources = {
     "Spotify": "https://news.google.com/rss/search?q=スポティファイ&hl=ja&gl=JP&ceid=JP:ja",
     "Epic Games": "https://news.google.com/rss/search?q=フォートナイト&hl=ja&gl=JP&ceid=JP:ja",
     "富士電機": "https://news.google.com/rss/search?q=富士電機&hl=ja&gl=JP&ceid=JP:ja",
-    "ZOZO": "https://news.google.com/rss/search?q=ZOZO&hl=ja&gl=JP&ceid=JP:ja"
+    "ZOZO": "https://news.google.com/rss/search?q=ZOZO&hl=ja&gl=JP&ceid=JP:ja",
+    "えがお": "https://news.google.com/rss/search?q=えがお+株式会社&hl=ja&gl=JP&ceid=JP:ja",
+    "芝浦機械": "https://news.google.com/rss/search?q=芝浦機械&hl=ja&gl=JP&ceid=JP:ja",
+    "M&Aキャピタル": "https://news.google.com/rss/search?q=M%26A%E3%82%AD%E3%83%A3%E3%83%94%E3%82%BF%E3%83%AB%E3%83%91%E3%83%BC%E3%83%88%E3%83%8A%E3%83%BC%E3%82%BA&hl=ja&gl=JP&ceid=JP:ja",
+    "エアウィーヴ": "https://news.google.com/rss/search?q=エアウィーヴ&hl=ja&gl=JP&ceid=JP:ja",
+    "PayPay": "https://news.google.com/rss/search?q=PayPay&hl=ja&gl=JP&ceid=JP:ja",
+    "アスクル": "https://news.google.com/rss/search?q=アスクル&hl=ja&gl=JP&ceid=JP:ja",
+    "UCC上島珈琲": "https://news.google.com/rss/search?q=UCC%E4%B8%8A%E5%B3%B6%E7%8F%88%E7%90%B2&hl=ja&gl=JP&ceid=JP:ja",
+    "TikTok": "https://news.google.com/rss/search?q=TikTok&hl=ja&gl=JP&ceid=JP:ja",
+    "ispace": "https://news.google.com/rss/search?q=ispace&hl=ja&gl=JP&ceid=JP:ja",
+    "プレミアグループ": "https://news.google.com/rss/search?q=プレミアグループ&hl=ja&gl=JP&ceid=JP:ja"
 }
 
 
@@ -92,7 +102,17 @@ def get_company_icon(company):
         "Spotify": "♪",
         "Epic Games": "🎮",
         "富士電機": "富",
-        "ZOZO": "ZZ"
+        "ZOZO": "ZZ",
+        "えがお": "笑",
+        "芝浦機械": "芝",
+        "M&Aキャピタル": "M&A",
+        "エアウィーヴ": "Air",
+        "PayPay": "PP",
+        "アスクル": "AS",
+        "UCC上島珈琲": "☕",
+        "TikTok": "TT",
+        "ispace": "🚀",
+        "プレミアグループ": "PG"
     }
     return icon_map.get(company, company[:2])
 
@@ -108,7 +128,17 @@ def get_tab_id(company):
         "Spotify": "spotify",
         "Epic Games": "epic",
         "富士電機": "fuji",
-        "ZOZO": "zozo"
+        "ZOZO": "zozo",
+        "えがお": "egao",
+        "芝浦機械": "shibaura",
+        "M&Aキャピタル": "macapital",
+        "エアウィーヴ": "airweave",
+        "PayPay": "paypay",
+        "アスクル": "askul",
+        "UCC上島珈琲": "ucc",
+        "TikTok": "tiktok",
+        "ispace": "ispace",
+        "プレミアグループ": "premier"
     }
     return tab_map.get(company, company.lower())
 
@@ -676,6 +706,16 @@ def main():
                 <button class="tab-button" data-tab="epic">🎮 Epic Games</button>
                 <button class="tab-button" data-tab="fuji">⚡ 富士電機</button>
                 <button class="tab-button" data-tab="zozo">👕 ZOZO</button>
+                <button class="tab-button" data-tab="egao">😊 えがお</button>
+                <button class="tab-button" data-tab="shibaura">🔧 芝浦機械</button>
+                <button class="tab-button" data-tab="macapital">📈 M&Aキャピタル</button>
+                <button class="tab-button" data-tab="airweave">🛏️ エアウィーヴ</button>
+                <button class="tab-button" data-tab="paypay">💳 PayPay</button>
+                <button class="tab-button" data-tab="askul">📦 アスクル</button>
+                <button class="tab-button" data-tab="ucc">☕ UCC上島珈琲</button>
+                <button class="tab-button" data-tab="tiktok">📱 TikTok</button>
+                <button class="tab-button" data-tab="ispace">🚀 ispace</button>
+                <button class="tab-button" data-tab="premier">🏆 プレミアグループ</button>
                 <button class="tab-button" data-tab="quote">💡 今日の格言</button>
                 <button class="tab-button" data-tab="story">📘 ショートストーリー</button>
             </div>
