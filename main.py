@@ -85,7 +85,7 @@ def get_news_for_company(company, url, max_retries=3):
 def filter_entries(company, entries):
     """会社ごとにニュースをフィルタリング（例：ソフトバンクのホークス除外）"""
     if company == "ソフトバンク":
-        excluded_keywords = ["ホークス", "野球", "選手", "打者", "投手", "試合", "安打", "監督", "球場", "打点", "ヒット", "二塁打", "三塁打", "巨人", "ホームラン", "１軍", "城島", "失点", "打球", "先発", "最下位", "起用", "退場", "守護神", "球団"]
+        excluded_keywords = ["ホークス", "野球", "選手", "打者", "投手", "試合", "復帰", "離脱", "捕手", "安打", "監督", "球場", "打点", "ヒット", "二塁打", "三塁打", "巨人", "ホームラン", "１軍", "城島", "失点", "打球", "先発", "最下位", "起用", "退場", "守護神", "球団"]
         return [entry for entry in entries if not any(kw in entry.title for kw in excluded_keywords)]
     return entries
 
