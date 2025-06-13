@@ -88,9 +88,9 @@ def get_company_icon(company):
         "電通": "電",
         "ガンホー": "GH",
         "GO": "GO",
-        "森ビル": "森"
-        "Spotify": "Spo",
-        "Epic Games": "EG",
+        "森ビル": "森",
+        "Spotify": "♪",
+        "Epic Games": "🎮",
         "富士電機": "富",
         "ZOZO": "ZZ"
     }
@@ -104,7 +104,7 @@ def get_tab_id(company):
         "電通": "dentsu",
         "ガンホー": "gungho",
         "GO": "go",
-        "森ビル": "mori"
+        "森ビル": "mori",
         "Spotify": "spotify",
         "Epic Games": "epic",
         "富士電機": "fuji",
