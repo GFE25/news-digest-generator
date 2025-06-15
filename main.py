@@ -737,8 +737,8 @@ def main():
 
         <!-- フッター -->
         <div class="footer">
-            最終更新: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} JST<br>
-　　　　　　　Enjoy Daily Life with the Latest News
+            最終更新: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} JST<br>　
+            Enjoy Daily Life with the Latest News
         </div>
     </div>
     
