@@ -87,6 +87,9 @@ def filter_entries(company, entries):
     if company == "ソフトバンク":
         excluded_keywords = ["ホークス", "野球", "選手", "打者", "投手", "試合", "連勝", "連敗", "引き分け", "猛打賞", "復帰", "離脱", "捕手", "安打", "監督", "球場", "打点", "ヒット", "二塁打", "三塁打", "巨人", "ホームラン", "１軍", "城島", "失点", "打球", "先発", "最下位", "起用", "退場", "守護神", "球団"]
         return [entry for entry in entries if not any(kw in entry.title for kw in excluded_keywords)]
+    elif company == "SBI証券":
+        excluded_keywords = ["投資判断", "中立", "買い", "売り"]
+        return [entry for entry in entries if not any(kw in entry.title for kw in excluded_keywords)]
     return entries
 
 
