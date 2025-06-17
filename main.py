@@ -16,7 +16,7 @@ rss_sources = {
     "Epic Games": "https://news.google.com/rss/search?q=フォートナイト&hl=ja&gl=JP&ceid=JP:ja",
     "富士電機": "https://news.google.com/rss/search?q=富士電機&hl=ja&gl=JP&ceid=JP:ja",
     "ZOZO": "https://news.google.com/rss/search?q=ZOZO&hl=ja&gl=JP&ceid=JP:ja",
-    "えがお": "https://news.google.com/rss/search?q=えがお+株式会社&hl=ja&gl=JP&ceid=JP:ja",
+    "えがお": "https://news.google.com/rss/search?q=株式会社えがお&hl=ja&gl=JP&ceid=JP:ja",
     "芝浦機械": "https://news.google.com/rss/search?q=芝浦機械&hl=ja&gl=JP&ceid=JP:ja",
     "M&Aキャピタル": "https://news.google.com/rss/search?q=M%26A%E3%82%AD%E3%83%A3%E3%83%94%E3%82%BF%E3%83%AB%E3%83%91%E3%83%BC%E3%83%88%E3%83%8A%E3%83%BC%E3%82%BA&hl=ja&gl=JP&ceid=JP:ja",
     "エアウィーヴ": "https://news.google.com/rss/search?q=エアウィーヴ&hl=ja&gl=JP&ceid=JP:ja",
