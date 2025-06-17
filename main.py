@@ -816,7 +816,12 @@ def main():
                     // 新しいアクティブ状態を設定
                     this.classList.add('active');
                     document.getElementById(targetTab).classList.add('active');
-                }});
+
+                    // ← この下に追加（差し替えではなく追記）
+                    gtag('event', 'tab_switch', {
+                     'event_category': 'navigation',
+                    　'event_label': targetTab
+                　　　});
             }});
 
             // スクロールアニメーション
