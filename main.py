@@ -818,10 +818,10 @@ def main():
                     document.getElementById(targetTab).classList.add('active');
 
                     // ← この下に追加（差し替えではなく追記）
-                    gtag('event', 'tab_switch', {
+                    gtag('event', 'tab_switch', {{
                      'event_category': 'navigation',
                     　'event_label': targetTab
-                　　　});
+                　　　}});
             }});
 
             // スクロールアニメーション
