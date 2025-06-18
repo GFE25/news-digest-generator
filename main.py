@@ -797,8 +797,7 @@ def main():
             最終更新: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} JST<br>　
            Enjoy Daily Life with the Latest News
         </div>
-       </div>   <!-- フッターの直前 -->
-    <script>
+       </div>   <!-- フッターの直前 -->    <script>
       document.addEventListener('DOMContentLoaded', function() {
         // タブ切り替え機能
         const tabButtons = document.querySelectorAll('.tab-button');
@@ -815,7 +814,7 @@ def main():
           });
         });
 
-        // スクロールアニメーション
+        // ↓ スクロールアニメーション
         const observerOptions = {{ threshold: 0.1, rootMargin: '0px 0px -100px 0px' }};
         const observer = new IntersectionObserver(function(entries) {{
           entries.forEach(entry => {{
@@ -825,46 +824,33 @@ def main():
           }});
         }}, observerOptions);
         document.querySelectorAll('.scroll-fade').forEach(el => observer.observe(el));
+        // ↑ スクロールアニメーション
 
         // ホバーエフェクト
         document.querySelectorAll('.news-item').forEach(item => {{
-          item.addEventListener('mouseenter', () => item.style.transform = 'translateX(10px)');
-          item.addEventListener('mouseleave', () => item.style.transform = 'translateX(0)');
+          item.addEventListener('mouseenter', function() {{
+            this.style.transform = 'translateX(10px)';
+          }});
+          item.addEventListener('mouseleave', function() {{
+            this.style.transform = 'translateX(0)';
+          }});
         }});
 
         // キーボードショートカット
         document.addEventListener('keydown', function(e) {{
           if (e.altKey) {{
             switch (e.key) {{
-              case '1':
-                e.preventDefault();
-                document.querySelector('[data-tab="all"]').click();
-                break;
-              case '2':
-                e.preventDefault();
-                document.querySelector('[data-tab="softbank"]').click();
-                break;
-              case '3':
-                e.preventDefault();
-                document.querySelector('[data-tab="taisho"]').click();
-                break;
-              case '4':
-                e.preventDefault();
-                document.querySelector('[data-tab="sbi"]').click();
-                break;
-              case '5':
-                e.preventDefault();
-                document.querySelector('[data-tab="quote"]').click();
-                break;
-              case '6':
-                e.preventDefault();
-                document.querySelector('[data-tab="story"]').click();
-                break;
+              case '1': e.preventDefault(); document.querySelector('[data-tab="all"]').click(); break;
+              case '2': e.preventDefault(); document.querySelector('[data-tab="softbank"]').click(); break;
+              case '3': e.preventDefault(); document.querySelector('[data-tab="taisho"]').click(); break;
+              case '4': e.preventDefault(); document.querySelector('[data-tab="sbi"]').click(); break;
+              case '5': e.preventDefault(); document.querySelector('[data-tab="quote"]').click(); break;
+              case '6': e.preventDefault(); document.querySelector('[data-tab="story"]').click(); break;
             }}
           }}
         }});
 
-      });  // ← DOMContentLoaded の閉じ
+      });  // ← DOMContentLoaded を閉じる
     </script>
   </body>
   </html>
