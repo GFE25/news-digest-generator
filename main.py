@@ -874,4 +874,4 @@ def main():
     </script>
 </body>
 </html>
-\"\"\"  # ← html_content の末尾トリプルクォート
+"""
