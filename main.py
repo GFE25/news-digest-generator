@@ -797,81 +797,75 @@ def main():
             最終更新: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} JST<br>　
            Enjoy Daily Life with the Latest News
         </div>
-    </div>
-    
+       </div>   <!-- フッターの直前 -->
     <script>
+      document.addEventListener('DOMContentLoaded', function() {
         // タブ切り替え機能
-               document.addEventListener('DOMContentLoaded', function() {
-            // タブ切り替え機能
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const tabContents = document.querySelectorAll('.tab-content');
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
 
-            tabButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const targetTab = this.getAttribute('data-tab');
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    this.classList.add('active');
-                    document.getElementById(targetTab).classList.add('active');
-                    gtag('event', 'tab_switch', {{ 'event_category': 'navigation', 'event_label': targetTab }});
-                });
-            });
+        tabButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            const targetTab = this.getAttribute('data-tab');
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            this.classList.add('active');
+            document.getElementById(targetTab).classList.add('active');
+            gtag('event', 'tab_switch', {{ 'event_category': 'navigation', 'event_label': targetTab }});
+          });
+        });
 
-            // スクロールアニメーション
-            const observerOptions = {{ threshold: 0.1, rootMargin: '0px 0px -100px 0px' }};
-            const observer = new IntersectionObserver(function(entries) {{
-                entries.forEach(entry => {{
-                    if (entry.isIntersecting) {{
-                        entry.target.classList.add('visible');
-                    }}
-                }});
-            }}, observerOptions);
-            document.querySelectorAll('.scroll-fade')
-                    .forEach(el => observer.observe(el));
+        // スクロールアニメーション
+        const observerOptions = {{ threshold: 0.1, rootMargin: '0px 0px -100px 0px' }};
+        const observer = new IntersectionObserver(function(entries) {{
+          entries.forEach(entry => {{
+            if (entry.isIntersecting) {{
+              entry.target.classList.add('visible');
+            }}
+          }});
+        }}, observerOptions);
+        document.querySelectorAll('.scroll-fade').forEach(el => observer.observe(el));
 
-            // ニュースアイテムにホバーエフェクト
-            document.querySelectorAll('.news-item').forEach(item => {{
-                item.addEventListener('mouseenter', function() {{
-                    this.style.transform = 'translateX(10px)';
-                }});
-                item.addEventListener('mouseleave', function() {{
-                    this.style.transform = 'translateX(0)';
-                }});
-            }});
+        // ホバーエフェクト
+        document.querySelectorAll('.news-item').forEach(item => {{
+          item.addEventListener('mouseenter', () => item.style.transform = 'translateX(10px)');
+          item.addEventListener('mouseleave', () => item.style.transform = 'translateX(0)');
+        }});
 
-            // キーボードショートカット
-            document.addEventListener('keydown', function(e) {{
-                if (e.altKey) {{
-                    switch (e.key) {{
-                        case '1':
-                            e.preventDefault();
-                            document.querySelector('[data-tab=\"all\"]').click();
-                            break;
-                        case '2':
-                            e.preventDefault();
-                            document.querySelector('[data-tab=\"softbank\"]').click();
-                            break;
-                        case '3':
-                            e.preventDefault();
-                            document.querySelector('[data-tab=\"taisho\"]').click();
-                            break;
-                        case '4':
-                            e.preventDefault();
-                            document.querySelector('[data-tab=\"sbi\"]').click();
-                            break;
-                        case '5':
-                            e.preventDefault();
-                            document.querySelector('[data-tab=\"quote\"]').click();
-                            break;
-                        case '6':
-                            e.preventDefault();
-                            document.querySelector('[data-tab=\"story\"]').click();
-                            break;
-                    }}
-                }}
-            }});
-        });  // ← ここでDOMContentLoadedを閉じる
+        // キーボードショートカット
+        document.addEventListener('keydown', function(e) {{
+          if (e.altKey) {{
+            switch (e.key) {{
+              case '1':
+                e.preventDefault();
+                document.querySelector('[data-tab="all"]').click();
+                break;
+              case '2':
+                e.preventDefault();
+                document.querySelector('[data-tab="softbank"]').click();
+                break;
+              case '3':
+                e.preventDefault();
+                document.querySelector('[data-tab="taisho"]').click();
+                break;
+              case '4':
+                e.preventDefault();
+                document.querySelector('[data-tab="sbi"]').click();
+                break;
+              case '5':
+                e.preventDefault();
+                document.querySelector('[data-tab="quote"]').click();
+                break;
+              case '6':
+                e.preventDefault();
+                document.querySelector('[data-tab="story"]').click();
+                break;
+            }}
+          }}
+        }});
+
+      });  // ← DOMContentLoaded の閉じ
     </script>
-</body>
-</html>
-"""
+  </body>
+  </html>
+  """  # ← html_content のトリプルクォート閉じ
