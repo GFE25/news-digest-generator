@@ -16,7 +16,7 @@ rss_sources = {
     "Epic Games": "https://news.google.com/rss/search?q=フォートナイト&hl=ja&gl=JP&ceid=JP:ja",
     "富士電機": "https://news.google.com/rss/search?q=富士電機&hl=ja&gl=JP&ceid=JP:ja",
     "ZOZO": "https://news.google.com/rss/search?q=ZOZO&hl=ja&gl=JP&ceid=JP:ja",
-    "えがお": "https://news.google.com/rss/search?q=えがお+OR+株式会社えがお&hl=ja&gl=JP&ceid=JP:ja",
+    "えがお": "https://news.google.com/rss/search?q=株式会社えがお&hl=ja&gl=JP&ceid=JP:ja",
     "芝浦機械": "https://news.google.com/rss/search?q=芝浦機械&hl=ja&gl=JP&ceid=JP:ja",
     "M&Aキャピタル": "https://news.google.com/rss/search?q=M%26A%E3%82%AD%E3%83%A3%E3%83%94%E3%82%BF%E3%83%AB%E3%83%91%E3%83%BC%E3%83%88%E3%83%8A%E3%83%BC%E3%82%BA&hl=ja&gl=JP&ceid=JP:ja",
     "エアウィーヴ": "https://news.google.com/rss/search?q=エアウィーヴ&hl=ja&gl=JP&ceid=JP:ja",
@@ -257,53 +257,7 @@ def main():
         "「成功する秘訣は、成功するまで諦めないことだ」 - アルベルト・アインシュタイン",
         "「未来を予測する最良の方法は、それを創ることだ」 - ピーター・ドラッカー",
         "「壁というのは、できないことを他人に証明するためにあるのではない」 - イチロー",
-        "「迷ったら前へ」 - 羽生善治",  
-        "「最も危険なのは、現状維持だ」 - ジェフ・ベゾス",
-        "「完璧を目指すより、まず終わらせろ」 - マーク・ザッカーバーグ",
-        "「失敗は選択肢の一つ。怖れずに早く失敗せよ」 - エリック・リース",
-        "「イノベーションはアイディアではなく、実行にある」 - イーロン・マスク",
-        "「人はプロダクトではなく、感情にお金を払う」 - スティーブ・ジョブズ",
-        "「未来を予測する最良の方法は、それを創ることだ」 - ピーター・ドラッカー",
-        "「勇気とは、恐れを感じながらも行動すること」 - ネルソン・マンデラ",
-        "「不可能だと決めつける前に、挑戦しよう」 - トーマス・エジソン",
-        "「遅くても進め。止まるな」 - 武田信玄",
-        "「行動はすべての成功の鍵である」 - パブロ・ピカソ",
-        "「できるかできないかじゃない。やるかやらないかだ」 - 大谷翔平",
-        "「限界なんて存在しない。あるのは壁だけだ」 - ウサイン・ボルト",
-        "「100回失敗しても、101回目で成功すればいい」 - イチロー",
-        "「チャンスは準備ができている人に訪れる」 - オプラ・ウィンフリー",
-        "「人生に失敗がないと、人生を失敗する」 - 本田宗一郎",
-        "「自分を信じなければ、誰も信じてくれない」 - セリーナ・ウィリアムズ",
-        "「時間は命そのもの。無駄にするな」 - ベンジャミン・フランクリン",
-        "「最も強い人は、笑顔を失わない人だ」 - マザー・テレサ",
-        "「夢を見ることができれば、それは実現できる」 - ウォルト・ディズニー",
-        "「勝ったときにこそ謙虚に。負けたときにこそ学べ」 - 羽生結弦",
-        "「学びて思わざればすなわち罔し」 - 孔子",
-        "「世界を動かすのは、熱意を持った少数だ」 - マハトマ・ガンジー",
-        "「君がどこへ行こうとも、全力を尽くせ」 - エイブラハム・リンカーン",
-        "「一番の近道は、地道である」 - イチロー",
-        "「私は失敗したことがない。ただ、1万通りの方法を見つけただけだ」 - トーマス・エジソン",
-        "「情熱があれば、知識は後からついてくる」 - 本田圭佑",
-        "「自分が変われば、世界が変わる」 - ガンジー",
-        "「苦しい時こそ、成長している」 - 長谷部誠",
-        "「夢を持て。それがすべての始まりだ」 - コービー・ブライアント",
-        "「失敗しても気にするな。99%は気にしていない」 - ウィル・スミス",
-        "「成功とは、情熱を失わずに失敗を重ねることだ」 - ウィンストン・チャーチル",
-        "「希望とは、夜明け前の最も暗い時間にある」 - セネカ",
-        "「偉大な仕事をする唯一の方法は、それを愛することだ」 - スティーブ・ジョブズ",
-        "「挑戦する勇気があれば、何でも可能だ」 - マイケル・ジョーダン",
-        "「壁というのは、できないことを証明するためにあるのではない」 - イチロー",
-        "「答えはいつも、行動の中にある」 - ジャック・マー",
-        "「最も確実に失敗する方法は、全員を喜ばせようとすることだ」 - ビル・コスビー",
-        "「成功は最終的なものではなく、失敗は致命的ではない」 - チャーチル",
-        "「どんなに遠い夢でも、第一歩を踏み出さなければ届かない」 - 孫正義",
-        "「人生は思った通りにはならないが、やった通りにはなる」 - 林修",
-        "「あなたの時間は限られている。だから他人の人生を生きるな」 - スティーブ・ジョブズ",
-        "「迷ったら前へ」 - 羽生善治",
-        "「始めなければ、何も始まらない」 - 堀江貴文",
-        "「才能とは、情熱を持ち続ける力」 - 落合陽一",
-        "「大切なのは、スピードではなく方向だ」 - ジョン・ウッデン",
-        "「賢者は愚者からも学び、愚者は誰からも学ばない」 - ソクラテス"
+        "「迷ったら前へ」 - 羽生善治"
     ]
 
     # ストーリーリスト
@@ -344,62 +298,6 @@ def main():
     html_content = f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WH2F91J7B4"></script>
-<script>
-      document.addEventListener('DOMContentLoaded', function() {{
-        // タブ切り替え機能
-        const tabButtons = document.querySelectorAll('.tab-button');
-        const tabContents = document.querySelectorAll('.tab-content');
-
-        tabButtons.forEach(button => {{
-          button.addEventListener('click', function() {{
-            const targetTab = this.getAttribute('data-tab');
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            tabContents.forEach(content => content.classList.remove('active'));
-            this.classList.add('active');
-            document.getElementById(targetTab).classList.add('active');
-            gtag('event', 'tab_switch', {{ 'event_category': 'navigation', 'event_label': targetTab }});
-          }});
-        }});
-
-        // スクロールアニメーション
-        const observerOptions = {{ threshold: 0.1, rootMargin: '0px 0px -100px 0px' }};
-        const observer = new IntersectionObserver(function(entries) {{
-          entries.forEach(entry => {{
-            if (entry.isIntersecting) {{
-              entry.target.classList.add('visible');
-            }}
-          }});
-        }}, observerOptions);
-        document.querySelectorAll('.scroll-fade').forEach(el => observer.observe(el));
-
-        // ホバーエフェクト
-        document.querySelectorAll('.news-item').forEach(item => {{
-          item.addEventListener('mouseenter', function() {{
-            this.style.transform = 'translateX(10px)';
-          }});
-          item.addEventListener('mouseleave', function() {{
-            this.style.transform = 'translateX(0)';
-          }});
-        }});
-
-        // キーボードショートカット
-        document.addEventListener('keydown', function(e) {{
-          if (e.altKey) {{
-            switch (e.key) {{
-              case '1': e.preventDefault(); document.querySelector('[data-tab="all"]').click(); break;
-              case '2': e.preventDefault(); document.querySelector('[data-tab="softbank"]').click(); break;
-              case '3': e.preventDefault(); document.querySelector('[data-tab="taisho"]').click(); break;
-              case '4': e.preventDefault(); document.querySelector('[data-tab="sbi"]').click(); break;
-              case '5': e.preventDefault(); document.querySelector('[data-tab="quote"]').click(); break;
-              case '6': e.preventDefault(); document.querySelector('[data-tab="story"]').click(); break;
-            }}
-          }}
-        }});
-
-      }});  // DOMContentLoaded の閉じ
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>11BP 生成AI勉強会 NEWS DIGEST</title>
@@ -845,74 +743,113 @@ def main():
             最終更新: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} JST<br>　
            Enjoy Daily Life with the Latest News
         </div>
-       </div>   <!-- フッターの直前 -->    <script>
-      document.addEventListener('DOMContentLoaded', function() {{
+    </div>
+    
+    <script>
         // タブ切り替え機能
-        const tabButtons = document.querySelectorAll('.tab-button');
-        const tabContents = document.querySelectorAll('.tab-content');
+        document.addEventListener('DOMContentLoaded', function() {{
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
 
-        tabButtons.forEach(button => {{
-          button.addEventListener('click', function() {{
-            const targetTab = this.getAttribute('data-tab');
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            tabContents.forEach(content => content.classList.remove('active'));
-            this.classList.add('active');
-            document.getElementById(targetTab).classList.add('active');
-            gtag('event', 'tab_switch', {{ 'event_category': 'navigation', 'event_label': targetTab }});
-          }});
+            tabButtons.forEach(button => {{
+                button.addEventListener('click', function() {{
+                    const targetTab = this.getAttribute('data-tab');
+
+                    // アクティブ状態をリセット
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    // 新しいアクティブ状態を設定
+                    this.classList.add('active');
+                    document.getElementById(targetTab).classList.add('active');
+                }});
+            }});
+
+            // スクロールアニメーション
+            const observerOptions = {{
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            }};
+
+            const observer = new IntersectionObserver(function(entries) {{
+                entries.forEach(entry => {{
+                    if (entry.isIntersecting) {{
+                        entry.target.classList.add('visible');
+                    }}
+                }});
+            }}, observerOptions);
+
+            // スクロールフェード要素を監視
+            document.querySelectorAll('.scroll-fade').forEach(el => {{
+                observer.observe(el);
+            }});
+
+            // ニュースアイテムにホバーエフェクト
+            document.querySelectorAll('.news-item').forEach(item => {{
+                item.addEventListener('mouseenter', function() {{
+                    this.style.transform = 'translateX(10px)';
+                }});
+
+                item.addEventListener('mouseleave', function() {{
+                    this.style.transform = 'translateX(0)';
+                }});
+            }});
+
+            // キーボードショートカット
+            document.addEventListener('keydown', function(e) {{
+                if (e.altKey) {{
+                    switch(e.key) {{
+                        case '1':
+                            e.preventDefault();
+                            document.querySelector('[data-tab="all"]').click();
+                            break;
+                        case '2':
+                            e.preventDefault();
+                            document.querySelector('[data-tab="softbank"]').click();
+                            break;
+                        case '3':
+                            e.preventDefault();
+                            document.querySelector('[data-tab="taisho"]').click();
+                            break;
+                        case '4':
+                            e.preventDefault();
+                            document.querySelector('[data-tab="sbi"]').click();
+                            break;
+                        case '5':
+                            e.preventDefault();
+                            document.querySelector('[data-tab="quote"]').click();
+                            break;
+                        case '6':
+                            e.preventDefault();
+                            document.querySelector('[data-tab="story"]').click();
+                            break;
+                    }}
+                }}
+            }});
         }});
-
-        // スクロールアニメーション
-        const observerOptions = {{ threshold: 0.1, rootMargin: '0px 0px -100px 0px' }};
-        const observer = new IntersectionObserver(function(entries) {{
-          entries.forEach(entry => {{
-            if (entry.isIntersecting) {{
-              entry.target.classList.add('visible');
-            }}
-          }});
-        }}, observerOptions);
-        document.querySelectorAll('.scroll-fade').forEach(el => observer.observe(el));
-
-        // ホバーエフェクト
-        document.querySelectorAll('.news-item').forEach(item => {{
-          item.addEventListener('mouseenter', function() {{
-            this.style.transform = 'translateX(10px)';
-          }});
-          item.addEventListener('mouseleave', function() {{
-            this.style.transform = 'translateX(0)';
-          }});
-        }});
-
-        // キーボードショートカット
-        document.addEventListener('keydown', function(e) {{
-          if (e.altKey) {{
-            switch (e.key) {{
-              case '1': e.preventDefault(); document.querySelector('[data-tab="all"]').click(); break;
-              case '2': e.preventDefault(); document.querySelector('[data-tab="softbank"]').click(); break;
-              case '3': e.preventDefault(); document.querySelector('[data-tab="taisho"]').click(); break;
-              case '4': e.preventDefault(); document.querySelector('[data-tab="sbi"]').click(); break;
-              case '5': e.preventDefault(); document.querySelector('[data-tab="quote"]').click(); break;
-              case '6': e.preventDefault(); document.querySelector('[data-tab="story"]').click(); break;
-            }}
-          }}
-        }});
-
-      }});  // DOMContentLoaded の閉じ
     </script>
-  </body>
-  </html>
-    """  # ← html_content のトリプルクォート閉じ
+</body>
+</html>
+"""
 
-    # HTMLを書き出し
-    with open("docs/index.html", "w", encoding="utf-8") as f:
-        f.write(html_content)
-    print("✅ docs/index.html を生成しました")
-
-    # 終了メッセージ
+    # HTMLファイル出力
+    try:
+        with open("index.html", "w", encoding="utf-8") as f:
+            f.write(html_content)
+        print("✅ index.html を正常に生成しました")
+        
+        # ファイルサイズを確認
+        import os
+        file_size = os.path.getsize("index.html")
+        print(f"📁 ファイルサイズ: {file_size:,} bytes")
+        
+    except Exception as e:
+        print(f"❌ ファイル書き込みエラー: {e}")
+        raise
+    
     print("=" * 50)
     print("🎉 NEWS DIGEST 生成完了")
     print("=" * 50)
-    # ───────────────────────────────────────────────
+
 if __name__ == "__main__":
     main()
-
