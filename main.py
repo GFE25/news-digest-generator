@@ -801,57 +801,24 @@ def main():
     
     <script>
         // タブ切り替え機能
-        document.addEventListener('DOMContentLoaded', function() {
-<!-- スクロールアニメーション -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {{
-    const observerOptions = {{
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-    }};
-
-    const observer = new IntersectionObserver(function(entries) {{
-        entries.forEach(entry => {{
-            if (entry.isIntersecting) {{
-                entry.target.classList.add('visible');
-            }}
-        }});
-    }}, observerOptions);
-
-    document.querySelectorAll('.scroll-fade').forEach(el => {{
-        observer.observe(el);
-    }});
-}});
-
-        {
+               document.addEventListener('DOMContentLoaded', function() {
+            // タブ切り替え機能
             const tabButtons = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
 
-            tabButtons.forEach(button => {{
-                button.addEventListener('click', function() {{
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
                     const targetTab = this.getAttribute('data-tab');
-
-                    // アクティブ状態をリセット
                     tabButtons.forEach(btn => btn.classList.remove('active'));
                     tabContents.forEach(content => content.classList.remove('active'));
-
-                    // 新しいアクティブ状態を設定
                     this.classList.add('active');
                     document.getElementById(targetTab).classList.add('active');
-
-                    // ← この下に追加（差し替えではなく追記）
-                    gtag('event', 'tab_switch', {{
-                     'event_category': 'navigation',
-                    　'event_label': targetTab
-                　　　}});
-            }});
+                    gtag('event', 'tab_switch', {{ 'event_category': 'navigation', 'event_label': targetTab }});
+                });
+            });
 
             // スクロールアニメーション
-            const observerOptions = {{
-                threshold: 0.1,
-                rootMargin: '0px 0px -100px 0px'
-            }};
-
+            const observerOptions = {{ threshold: 0.1, rootMargin: '0px 0px -100px 0px' }};
             const observer = new IntersectionObserver(function(entries) {{
                 entries.forEach(entry => {{
                     if (entry.isIntersecting) {{
@@ -859,18 +826,14 @@ document.addEventListener('DOMContentLoaded', function () {{
                     }}
                 }});
             }}, observerOptions);
-
-            // スクロールフェード要素を監視
-            document.querySelectorAll('.scroll-fade').forEach(el => {{
-                observer.observe(el);
-            }});
+            document.querySelectorAll('.scroll-fade')
+                    .forEach(el => observer.observe(el));
 
             // ニュースアイテムにホバーエフェクト
             document.querySelectorAll('.news-item').forEach(item => {{
                 item.addEventListener('mouseenter', function() {{
                     this.style.transform = 'translateX(10px)';
                 }});
-
                 item.addEventListener('mouseleave', function() {{
                     this.style.transform = 'translateX(0)';
                 }});
@@ -879,58 +842,36 @@ document.addEventListener('DOMContentLoaded', function () {{
             // キーボードショートカット
             document.addEventListener('keydown', function(e) {{
                 if (e.altKey) {{
-                    switch(e.key) {{
+                    switch (e.key) {{
                         case '1':
                             e.preventDefault();
-                            document.querySelector('[data-tab="all"]').click();
+                            document.querySelector('[data-tab=\"all\"]').click();
                             break;
                         case '2':
                             e.preventDefault();
-                            document.querySelector('[data-tab="softbank"]').click();
+                            document.querySelector('[data-tab=\"softbank\"]').click();
                             break;
                         case '3':
                             e.preventDefault();
-                            document.querySelector('[data-tab="taisho"]').click();
+                            document.querySelector('[data-tab=\"taisho\"]').click();
                             break;
                         case '4':
                             e.preventDefault();
-                            document.querySelector('[data-tab="sbi"]').click();
+                            document.querySelector('[data-tab=\"sbi\"]').click();
                             break;
                         case '5':
                             e.preventDefault();
-                            document.querySelector('[data-tab="quote"]').click();
+                            document.querySelector('[data-tab=\"quote\"]').click();
                             break;
                         case '6':
                             e.preventDefault();
-                            document.querySelector('[data-tab="story"]').click();
+                            document.querySelector('[data-tab=\"story\"]').click();
                             break;
                     }}
                 }}
             }});
-        }});
+        });  // ← ここでDOMContentLoadedを閉じる
     </script>
 </body>
 </html>
-"""
-
-    # HTMLファイル出力
-    try:
-        with open("docs/index.html", "w", encoding="utf-8") as f:
-            f.write(html_content)
-        print("✅ index.html を正常に生成しました")
-        
-        # ファイルサイズを確認
-        import os
-        file_size = os.path.getsize("index.html")
-        print(f"📁 ファイルサイズ: {file_size:,} bytes")
-        
-    except Exception as e:
-        print(f"❌ ファイル書き込みエラー: {e}")
-        raise
-    
-    print("=" * 50)
-    print("🎉 NEWS DIGEST 生成完了")
-    print("=" * 50)
-
-if __name__ == "__main__":
-    main()
+\"\"\"  # ← html_content の末尾トリプルクォート
