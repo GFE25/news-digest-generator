@@ -798,7 +798,7 @@ def main():
            Enjoy Daily Life with the Latest News
         </div>
        </div>   <!-- フッターの直前 -->    <script>
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener('DOMContentLoaded', function() {{
         // タブ切り替え機能
         const tabButtons = document.querySelectorAll('.tab-button');
         const tabContents = document.querySelectorAll('.tab-content');
@@ -850,7 +850,7 @@ def main():
           }}
         }});
 
-      });  // ← DOMContentLoaded を閉じる
+      }});  // ← DOMContentLoaded を閉じる
     </script>
   </body>
   </html>
