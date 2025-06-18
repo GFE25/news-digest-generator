@@ -801,7 +801,26 @@ def main():
     
     <script>
         // タブ切り替え機能
-        document.addEventListener('DOMContentLoaded', function() {{
+        document.addEventListener('DOMContentLoaded', function() {
+             // スクロールアニメーション
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.scroll-fade').forEach(el => {
+                observer.observe(el);
+            });
+
+        {
             const tabButtons = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
 
@@ -893,7 +912,7 @@ def main():
 
     # HTMLファイル出力
     try:
-        with open("index.html", "w", encoding="utf-8") as f:
+        with open("docs/index.html", "w", encoding="utf-8") as f:
             f.write(html_content)
         print("✅ index.html を正常に生成しました")
         
