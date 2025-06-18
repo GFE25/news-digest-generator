@@ -802,23 +802,26 @@ def main():
     <script>
         // タブ切り替え機能
         document.addEventListener('DOMContentLoaded', function() {
-             // スクロールアニメーション
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -100px 0px'
-            };
+<!-- スクロールアニメーション -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {{
+    const observerOptions = {{
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    }};
 
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, observerOptions);
+    const observer = new IntersectionObserver(function(entries) {{
+        entries.forEach(entry => {{
+            if (entry.isIntersecting) {{
+                entry.target.classList.add('visible');
+            }}
+        }});
+    }}, observerOptions);
 
-            document.querySelectorAll('.scroll-fade').forEach(el => {
-                observer.observe(el);
-            });
+    document.querySelectorAll('.scroll-fade').forEach(el => {{
+        observer.observe(el);
+    }});
+}});
 
         {
             const tabButtons = document.querySelectorAll('.tab-button');
