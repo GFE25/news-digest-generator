@@ -90,6 +90,9 @@ def filter_entries(company, entries):
     elif company == "SBI証券":
         excluded_keywords = ["投資判断", "中立", "買い", "目標株価", "売り"]
         return [entry for entry in entries if not any(kw in entry.title for kw in excluded_keywords)]
+    elif company == "ZOZO":
+        excluded_keywords = ["マリーンズ", "マリン", "ロッテ", "スタジアム"]
+        return [entry for entry in entries if not any(kw in entry.title for kw in excluded_keywords)]
     return entries
 
 
