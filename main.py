@@ -3,12 +3,11 @@ from datetime import datetime
 import time
 import random
 
-# RSS ソースの定義
+# RSS ソースの定義（順番を調整、博報堂とサイバーエージェントを追加）
 rss_sources = {
     "ソフトバンク": "https://news.google.com/rss/search?q=ソフトバンク&hl=ja&gl=JP&ceid=JP:ja",
     "大正製薬": "https://news.google.com/rss/search?q=大正製薬&hl=ja&gl=JP&ceid=JP:ja",
     "SBI証券": "https://news.google.com/rss/search?q=SBI証券&hl=ja&gl=JP&ceid=JP:ja",
-    "電通": "https://news.google.com/rss/search?q=電通&hl=ja&gl=JP&ceid=JP:ja",
     "ガンホー": "https://news.google.com/rss/search?q=ガンホー&hl=ja&gl=JP&ceid=JP:ja",
     "GO": "https://news.google.com/rss/search?q=GO+タクシー&hl=ja&gl=JP&ceid=JP:ja",
     "森ビル": "https://news.google.com/rss/search?q=森ビル&hl=ja&gl=JP&ceid=JP:ja",
@@ -25,7 +24,10 @@ rss_sources = {
     "UCC上島珈琲": "https://news.google.com/rss/search?q=UCC%E4%B8%8A%E5%B3%B6%E7%8F%88%E7%90%B2&hl=ja&gl=JP&ceid=JP:ja",
     "TikTok": "https://news.google.com/rss/search?q=TikTok&hl=ja&gl=JP&ceid=JP:ja",
     "ispace": "https://news.google.com/rss/search?q=ispace&hl=ja&gl=JP&ceid=JP:ja",
-    "プレミアグループ": "https://news.google.com/rss/search?q=プレミアグループ&hl=ja&gl=JP&ceid=JP:ja"
+    "プレミアグループ": "https://news.google.com/rss/search?q=プレミアグループ&hl=ja&gl=JP&ceid=JP:ja",
+    "電通": "https://news.google.com/rss/search?q=電通&hl=ja&gl=JP&ceid=JP:ja",
+    "博報堂": "https://news.google.com/rss/search?q=博報堂&hl=ja&gl=JP&ceid=JP:ja",
+    "サイバーエージェント": "https://news.google.com/rss/search?q=サイバーエージェント&hl=ja&gl=JP&ceid=JP:ja"
 }
 
 
@@ -101,7 +103,6 @@ def get_company_icon(company):
         "ソフトバンク": "SB",
         "大正製薬": "大",
         "SBI証券": "SBI",
-        "電通": "電",
         "ガンホー": "GH",
         "GO": "GO",
         "森ビル": "森",
@@ -118,7 +119,10 @@ def get_company_icon(company):
         "UCC上島珈琲": "☕",
         "TikTok": "TT",
         "ispace": "🚀",
-        "プレミアグループ": "PG"
+        "プレミアグループ": "PG",
+        "電通": "電",
+        "博報堂": "博",
+        "サイバーエージェント": "CA"
     }
     return icon_map.get(company, company[:2])
 
@@ -127,7 +131,6 @@ def get_tab_id(company):
         "ソフトバンク": "softbank",
         "大正製薬": "taisho", 
         "SBI証券": "sbi",
-        "電通": "dentsu",
         "ガンホー": "gungho",
         "GO": "go",
         "森ビル": "mori",
@@ -144,7 +147,10 @@ def get_tab_id(company):
         "UCC上島珈琲": "ucc",
         "TikTok": "tiktok",
         "ispace": "ispace",
-        "プレミアグループ": "premier"
+        "プレミアグループ": "premier",
+        "電通": "dentsu",
+        "博報堂": "hakuhodo",
+        "サイバーエージェント": "cyberagent"
     }
     return tab_map.get(company, company.lower())
 
@@ -406,7 +412,7 @@ def main():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>11BP 生成AI勉強会 NEWS DIGEST</title>
+    <title>11BP GFE NEWS DIGEST</title>
     <style>
         :root {{
             --primary-color: #3498db;
@@ -794,7 +800,7 @@ def main():
     <div class="container">
         <!-- ヘッダー -->
         <div class="header">
-            <h1>11BP 生成AI勉強会 NEWS DIGEST</h1>
+            <h1>11BP GFE NEWS DIGEST</h1>
             <div class="header-info">
                 📅 {today} | 🕐 {current_time} | 📊 {total_articles}件
             </div>
@@ -807,7 +813,6 @@ def main():
                 <button class="tab-button" data-tab="softbank">📱 ソフトバンク</button>
                 <button class="tab-button" data-tab="taisho">💊 大正製薬</button>
                 <button class="tab-button" data-tab="sbi">💰 SBI証券</button>
-                <button class="tab-button" data-tab="dentsu">📺 電通</button>
                 <button class="tab-button" data-tab="gungho">🎮 ガンホー</button>
                 <button class="tab-button" data-tab="go">🚕 GO</button>
                 <button class="tab-button" data-tab="mori">🏢 森ビル</button>
@@ -825,6 +830,9 @@ def main():
                 <button class="tab-button" data-tab="tiktok">📱 TikTok</button>
                 <button class="tab-button" data-tab="ispace">🚀 ispace</button>
                 <button class="tab-button" data-tab="premier">🏆 プレミアグループ</button>
+                <button class="tab-button" data-tab="dentsu">📺 電通</button>
+                <button class="tab-button" data-tab="hakuhodo">📢 博報堂</button>
+                <button class="tab-button" data-tab="cyberagent">💻 サイバーエージェント</button>
                 <button class="tab-button" data-tab="quote">💡 今日の格言</button>
                 <button class="tab-button" data-tab="story">📘 ショートストーリー</button>
             </div>
