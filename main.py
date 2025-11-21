@@ -26,6 +26,7 @@ rss_sources = {
     "ispace": "https://news.google.com/rss/search?q=ispace&hl=ja&gl=JP&ceid=JP:ja",
     "プレミアグループ": "https://news.google.com/rss/search?q=プレミアグループ&hl=ja&gl=JP&ceid=JP:ja",
     "TENTIAL": "https://news.google.com/rss/search?q=TENTIAL&hl=ja&gl=JP&ceid=JP:ja",
+    "サイボウズ": "https://news.google.com/rss/search?q=サイボウズ&hl=ja&gl=JP&ceid=JP:ja",
     "電通": "https://news.google.com/rss/search?q=電通&hl=ja&gl=JP&ceid=JP:ja",
     "博報堂": "https://news.google.com/rss/search?q=博報堂&hl=ja&gl=JP&ceid=JP:ja",
     "サイバーエージェント": "https://news.google.com/rss/search?q=サイバーエージェント&hl=ja&gl=JP&ceid=JP:ja"
@@ -122,6 +123,7 @@ def get_company_icon(company):
         "ispace": "🚀",
         "プレミアグループ": "PG",
         "TENTIAL": "🏋️",
+        "サイボウズ": "Cy",
         "電通": "電",
         "博報堂": "博",
         "サイバーエージェント": "CA"
@@ -151,6 +153,7 @@ def get_tab_id(company):
         "ispace": "ispace",
         "プレミアグループ": "premier",
         "TENTIAL": "tential",
+        "サイボウズ": "cybozu",
         "電通": "dentsu",
         "博報堂": "hakuhodo",
         "サイバーエージェント": "cyberagent"
@@ -834,6 +837,7 @@ def main():
                 <button class="tab-button" data-tab="ispace">🚀 ispace</button>
                 <button class="tab-button" data-tab="premier">🏆 プレミアグループ</button>
                 <button class="tab-button" data-tab="tential">⚡ TENTIAL</button>
+                <button class="tab-button" data-tab="cybozu">🗂 サイボウズ</button>
                 <button class="tab-button" data-tab="dentsu">📺 電通</button>
                 <button class="tab-button" data-tab="hakuhodo">📢 博報堂</button>
                 <button class="tab-button" data-tab="cyberagent">💻 サイバーエージェント</button>
